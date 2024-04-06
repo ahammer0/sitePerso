@@ -1,0 +1,17 @@
+{
+    "name": "sitePerso",
+    "version": "1.0.0",
+    "description": "site personnel d' Axel Schwindenhammer",
+    "main": "index.html",
+    "scripts": {
+        "start": "browser-sync start --server --watch --files \"*.css *.html\""
+    },
+    "repository": "git@github.com:ahammer0/sitePerso.git",
+    "author": "ahammer0 <axel.schwindenhammer@gmail.com>",
+    "license": "MIT",
+    "private": true,
+    "devDependencies": {
+        "browser-sync": "^3.0.2",
+        "prettier": "^3.2.5"
+    }
+}

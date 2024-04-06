@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    --primary: #f9e6f0;
+    --gray: #79819a;
+    --light-gray: #f7f9fc;
+}
+section {
+}
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--light-gray);
+}
+
+.navbar .navbar__logo {
+    background-color: var(--gray);
+    height: 3rem;
+    width: 3rem;
+    justify-self: flex-start;
+}
+.navbar .navbar__linkBlock {
+}
+.navbar .navbar__link {
+    margin: 0.5rem;
+    text-decoration: none;
+    color: black;
+}
+.navbar .navbar__link:hover {
+    text-decoration: underline;
+}
+.sectionBio {
+    background-color: var(--primary);
+}
+.sectionBio article {
+    width: 1000px;
+    height: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.sectionBio .sectionBio__img {
+    width: 10rem;
+    height: 10rem;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+.sectionBio .sectionBio__profile {
+    width: 30%;
+    margin: 2rem;
+}
+.sectionBio .sectionBio__name {
+    margin-bottom: 0.5rem;
+}
+.sectionBio .sectionBio__description {
+    margin: 2rem;
+}
+.sectionWork {
+    width: 1200px;
+    height: 400px;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.sectionWork .sectionWork__title {
+    margin-bottom: 2rem;
+}
+.sectionWork .sectionWork__eltContainer {
+    display: flex;
+    flex-direction: row;
+}
+.workElt {
+    width: 20rem;
+    margin-right: 2rem;
+}
+.workElt .workElt__img {
+    width: 100%;
+    height: 10rem;
+}
+.workElt .workElt__title {
+    margin-bottom: 0.5rem;
+}
+.workElt .workElt__description {
+    margin-bottom: 1rem;
+}
+.workElt .workElt__link {
+}
+.sectionTools {
+    width: 1200px;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    display: flex;
+    background-color: var(--primary);
+}
+.sectionTools article {
+    margin-right: 1rem;
+}
+.sectionTools .sectionTools__img {
+    height: 5rem;
+    width: 5rem;
+}
+.sectionTools .sectionTools__title {
+}
+.sectionTools .sectionTools__stars {
+}
+.sectionContact {
+    width: 100%;
+    height: 20rem;
+}
+.sectionContact .sectionContact__container {
+    display: flex;
+    width: 1200px;
+    height: 100%;
+    margin: auto;
+    flex-direction: row;
+    justify-content: center;
+}
+.sectionContact .sectionContact__text {
+    margin: 2rem;
+    background-color: var(--primary);
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sectionContact .sectionContact__text--title {
+    margin-bottom: 2rem;
+}
+.sectionContact .sectionContact__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.sectionContact__form .sectionContact__form--input {
+    height: 1rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+footer {
+    height: 5rem;
+    background-color: var(--light-gray);
+    margin-top: 1rem;
+}
