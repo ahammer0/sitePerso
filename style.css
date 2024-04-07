@@ -17,7 +17,6 @@ section {
 }
 
 .navbar .navbar__logo {
-    background-color: var(--gray);
     height: 3rem;
     width: 3rem;
     justify-self: flex-start;
@@ -48,6 +47,7 @@ section {
     height: 10rem;
     margin: auto;
     margin-bottom: 1rem;
+    object-fit: cover;
 }
 .sectionBio .sectionBio__profile {
     width: 30%;
@@ -104,6 +104,7 @@ section {
 .sectionTools .sectionTools__img {
     height: 5rem;
     width: 5rem;
+    object-fit: contain;
 }
 .sectionTools .sectionTools__title {
 }
