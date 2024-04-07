@@ -1,0 +1,13 @@
+{
+    "name": "axel/site-perso",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "authors": [
+        {
+            "name": "ahammer0",
+            "email": "axel.schwindenhammer@gmail.com"
+        }
+    ]
+}

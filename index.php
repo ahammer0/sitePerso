@@ -1,5 +1,3 @@
-<!--TODO-LIST
--->
 <!doctype html>
 <html lang="fr">
     <head>
@@ -264,7 +262,7 @@
                             J' ai hâte de vous lire.
                         </p>
                     </div>
-                    <form class="sectionContact__form" action="">
+                    <form class="sectionContact__form" action="submit_contact.php" method="post">
                         <div class="sectionContact__form--col">
                             <label
                                 for="nom"
@@ -312,7 +310,7 @@
                                 rows="5"
                                 required
                             ></textarea>
-                            <button class="sectionContact__form-submitButton">
+                            <button class="sectionContact__form-submitButton" type="submit" >
                                 Envoyer
                             </button>
                         </div>
