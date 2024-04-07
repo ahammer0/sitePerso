@@ -5,7 +5,15 @@
     --gray: #79819a;
     --light-gray: #f7f9fc;
 }
-section {
+a {
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:focus {
+    outline: none;
 }
 .navbar {
     display: flex;
@@ -31,11 +39,14 @@ section {
 .navbar .navbar__link:hover {
     text-decoration: underline;
 }
+.navbar .navbar__link:focus {
+    outline: none;
+}
 .sectionBio {
     background-color: var(--primary);
 }
 .sectionBio article {
-    width: 1000px;
+    max-width: 800px;
     height: 400px;
     margin: auto;
     display: flex;
@@ -60,7 +71,7 @@ section {
     margin: 2rem;
 }
 .sectionWork {
-    width: 1200px;
+    max-width: 1000px;
     height: 400px;
     margin: auto;
     margin-top: 2rem;
@@ -76,39 +87,59 @@ section {
 .workElt {
     width: 20rem;
     margin-right: 2rem;
+    background-color: var(--light-gray);
 }
 .workElt .workElt__img {
     width: 100%;
     height: 10rem;
 }
+.workElt .workElt__content {
+    padding: 2rem;
+}
 .workElt .workElt__title {
     margin-bottom: 0.5rem;
 }
 .workElt .workElt__description {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 .workElt .workElt__link {
+    margin-bottom: 1rem;
 }
 .sectionTools {
-    width: 1200px;
+    background-color: var(--primary);
+}
+.sectionTools .sectionTools__container {
+    max-width: 1000px;
     margin: auto;
     margin-top: 2rem;
     margin-bottom: 2rem;
-    padding: 1rem;
+    padding: 2rem;
     display: flex;
-    background-color: var(--primary);
+    flex-wrap: wrap;
 }
 .sectionTools article {
-    margin-right: 1rem;
+    margin: 0.5rem;
+    background-color: var(--light-gray);
+    width: 100px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 .sectionTools .sectionTools__img {
     height: 5rem;
     width: 5rem;
-    object-fit: contain;
+    object-fit: scale-down;
+    margin: auto;
 }
 .sectionTools .sectionTools__title {
 }
 .sectionTools .sectionTools__stars {
+}
+
+.sectionTools .sectionTools__stars img {
+    height: 0.75rem;
+    width: 0.75rem;
+    object-fit: cover;
 }
 .sectionContact {
     width: 100%;
@@ -116,14 +147,15 @@ section {
 }
 .sectionContact .sectionContact__container {
     display: flex;
-    width: 1200px;
+    max-width: 1000px;
     height: 100%;
     margin: auto;
     flex-direction: row;
-    justify-content: center;
+    align-items: center;
 }
 .sectionContact .sectionContact__text {
     margin: 2rem;
+    height: 10rem;
     background-color: var(--primary);
     padding: 2rem;
     display: flex;
@@ -137,36 +169,48 @@ section {
 .sectionContact .sectionContact__form {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    align-items: flex-start;
 }
-.sectionContact .sectionContact__form--row {
+.sectionContact .sectionContact__form--col {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     margin-right: 1rem;
 }
-.sectionContact__form .sectionContact__form--input {
-    height: 1rem;
+.sectionContact__form .sectionContact__form-input {
+    height: 1.5rem;
     display: block;
     margin-bottom: 1rem;
+    padding: 0.25rem;
     border: none;
-    box-shadow: inset 0 0 1px 0px;
+    box-shadow: inset 0 0 4px 1px rgba(0, 0, 0, 0.3);
     border-radius: 0.25rem;
 }
-.sectionContact__form .sectionContact__form--inputLabel {
+.sectionContact__form .sectionContact__form-input:focus {
+    outline: none;
+}
+.sectionContact__form .sectionContact__form-input--area {
+    display: block;
+    height: unset;
+    margin-bottom: 1rem;
+}
+.sectionContact__form .sectionContact__form-inputLabel {
     color: var(--gray);
     font-size: small;
 }
 
-.sectionContact__form .sectionContact__form--inputArea {
-    display: block;
-    margin-bottom: 1rem;
-    box-shadow: inset 0 0 1px 0px;
+.sectionContact__form .sectionContact__form-submitButton {
+    align-self: flex-end;
+    /* width: 4rem; */
+    padding: 1rem;
     border-radius: 0.25rem;
+    border: none;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
 }
-
-.sectionContact__form .sectionContact__form--submitButton {
-    display: inline-block;
+.sectionContact__form .sectionContact__form-submitButton:active {
+    box-shadow: inset 0 0 4px 1px rgba(0, 0, 0, 0.3);
+}
+.sectionContact__form .sectionContact__form-submitButton:focus {
+    outline: none;
 }
 
 footer {
@@ -177,4 +221,5 @@ footer {
 .footer {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
