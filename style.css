@@ -23,7 +23,11 @@ a:focus {
     padding: 1rem;
     background-color: var(--light-gray);
 }
-
+@media screen and (max-width: 1000px) {
+    .navbar {
+        display: none;
+    }
+}
 .navbar .navbar__logo {
     height: 3rem;
     width: 3rem;
@@ -47,11 +51,16 @@ a:focus {
 }
 .sectionBio article {
     max-width: 800px;
-    height: 400px;
+    min-height: 400px;
     margin: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+@media screen and (max-width: 1000px) {
+    .sectionBio article {
+        flex-direction: column;
+    }
 }
 .sectionBio .sectionBio__img {
     width: 10rem;
@@ -61,7 +70,7 @@ a:focus {
     object-fit: cover;
 }
 .sectionBio .sectionBio__profile {
-    width: 30%;
+    min-width: 30%;
     margin: 2rem;
 }
 .sectionBio .sectionBio__name {
@@ -72,7 +81,6 @@ a:focus {
 }
 .sectionWork {
     max-width: 1000px;
-    height: 400px;
     margin: auto;
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -83,15 +91,25 @@ a:focus {
 .sectionWork .sectionWork__eltContainer {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 .workElt {
-    width: 20rem;
-    margin-right: 2rem;
+    max-width: 18rem;
+    margin: 1rem;
     background-color: var(--light-gray);
+}
+@media screen and (max-width: 1000px) {
+    .workElt {
+        width: 90%;
+        margin: auto;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 }
 .workElt .workElt__img {
     width: 100%;
     height: 10rem;
+    object-fit: scale-down;
 }
 .workElt .workElt__content {
     padding: 2rem;
@@ -116,6 +134,7 @@ a:focus {
     padding: 2rem;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 .sectionTools article {
     margin: 0.5rem;
@@ -133,17 +152,10 @@ a:focus {
 }
 .sectionTools .sectionTools__title {
 }
-.sectionTools .sectionTools__stars {
-}
 
-.sectionTools .sectionTools__stars img {
-    height: 0.75rem;
-    width: 0.75rem;
-    object-fit: cover;
-}
 .sectionContact {
     width: 100%;
-    height: 20rem;
+    min-height: 20rem;
 }
 .sectionContact .sectionContact__container {
     display: flex;
@@ -153,6 +165,12 @@ a:focus {
     flex-direction: row;
     align-items: center;
 }
+@media screen and (max-width: 1000px) {
+    .sectionContact .sectionContact__container {
+        flex-direction: column;
+    }
+}
+
 .sectionContact .sectionContact__text {
     margin: 2rem;
     height: 10rem;
@@ -170,6 +188,11 @@ a:focus {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+}
+@media screen and (max-width: 1000px) {
+    .sectionContact .sectionContact__form {
+        flex-direction: column;
+    }
 }
 .sectionContact .sectionContact__form--col {
     display: flex;
