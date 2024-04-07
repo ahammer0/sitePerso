@@ -136,16 +136,45 @@ section {
 }
 .sectionContact .sectionContact__form {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.sectionContact .sectionContact__form--row {
+    display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-right: 1rem;
 }
 .sectionContact__form .sectionContact__form--input {
     height: 1rem;
     display: block;
     margin-bottom: 1rem;
+    border: none;
+    box-shadow: inset 0 0 1px 0px;
+    border-radius: 0.25rem;
 }
+.sectionContact__form .sectionContact__form--inputLabel {
+    color: var(--gray);
+    font-size: small;
+}
+
+.sectionContact__form .sectionContact__form--inputArea {
+    display: block;
+    margin-bottom: 1rem;
+    box-shadow: inset 0 0 1px 0px;
+    border-radius: 0.25rem;
+}
+
+.sectionContact__form .sectionContact__form--submitButton {
+    display: inline-block;
+}
+
 footer {
     height: 5rem;
     background-color: var(--light-gray);
     margin-top: 1rem;
+}
+.footer {
+    display: flex;
+    justify-content: center;
 }
