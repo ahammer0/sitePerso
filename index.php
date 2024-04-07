@@ -104,13 +104,6 @@
                             width="80"
                         />
                         <h3 class="sectionTools__title">HTML 5</h3>
-                        <div class="sectionTools__stars">
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                        </div>
                     </article>
                     <article>
                         <img
@@ -121,13 +114,6 @@
                             width="80"
                         />
                         <h3 class="sectionTools__title">CSS 3</h3>
-                        <div class="sectionTools__stars">
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                        </div>
                     </article>
                     <article>
                         <img
@@ -138,13 +124,6 @@
                             width="80"
                         />
                         <h3 class="sectionTools__title">React</h3>
-                        <div class="sectionTools__stars">
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                        </div>
                     </article>
                     <article>
                         <img
@@ -155,13 +134,6 @@
                             width="80"
                         />
                         <h3 class="sectionTools__title">Javascript</h3>
-                        <div class="sectionTools__stars">
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                        </div>
                     </article>
                     <article>
                         <img
@@ -172,13 +144,6 @@
                             width="80"
                         />
                         <h3 class="sectionTools__title">Express js</h3>
-                        <div class="sectionTools__stars">
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                        </div>
                     </article>
                     <article>
                         <img
@@ -189,13 +154,6 @@
                             width="80"
                         />
                         <h3 class="sectionTools__title">Figma</h3>
-                        <div class="sectionTools__stars">
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                        </div>
                     </article>
                     <article>
                         <img
@@ -206,13 +164,6 @@
                             width="80"
                         />
                         <h3 class="sectionTools__title">Git</h3>
-                        <div class="sectionTools__stars">
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                        </div>
                     </article>
                     <article>
                         <img
@@ -223,13 +174,6 @@
                             width="80"
                         />
                         <h3 class="sectionTools__title">Node.js</h3>
-                        <div class="sectionTools__stars">
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                        </div>
                     </article>
                     <article>
                         <img
@@ -240,13 +184,6 @@
                             width="80"
                         />
                         <h3 class="sectionTools__title">Tailwind CSS</h3>
-                        <div class="sectionTools__stars">
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/star.png" alt="" />
-                            <img src="assets/icons/empty_star.png" alt="" />
-                        </div>
                     </article>
                 </div>
             </section>
