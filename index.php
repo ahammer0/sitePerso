@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . "/dbConnect.php"; ?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -47,50 +48,46 @@
                 </article>
             </section>
             <section class="sectionWork" id="work">
+            <?php
+            $projectStatement = $db->prepare(
+              "SELECT name, description_short, picture, url FROM projects",
+            );
+            $projectStatement->execute();
+            $projects = $projectStatement->fetchAll();
+            ?>
                 <h1 class="sectionWork__title">Mon Travail</h1>
                 <div class="sectionWork__eltContainer">
+                <?php foreach ($projects as $project): ?>
                     <article class="workElt">
                         <img
                             class="workElt__img"
-                            src="assets/images/capture_bekasse.jpg"
-                            alt="site de l' association la békasse fait par Axel Schwindenhammer"
+                            src="assets/images/<?php echo $project[
+                              "picture"
+                            ]; ?>"
+                            alt="<?php echo $project[
+                              "description_short"
+                            ]; ?> fait par Axel Schwindenhammer"
                         />
                         <div class="workElt__content">
-                            <h3 class="workElt__title">la békasse</h3>
+                            <h3 class="workElt__title">
+                              <?php echo $project[
+                                "name"
+                              ]; ?>
+                            </h3>
                             <p class="workElt__description">
-                                Site d' une asso en Réact/symfony
+                                <?php echo $project[
+                                  "description_short"
+                                ]; ?>
                             </p>
-                            <a class="workElt__link" href="">La Békasse</a>
+                            <a class="workElt__link" href="<?php echo $project[
+                              "url"
+                            ]; ?>">
+                            <?php echo $project[
+                              "name"
+                            ]; ?></a>
                         </div>
                     </article>
-                    <article class="workElt">
-                        <img
-                            class="workElt__img"
-                            src="assets/images/capture_bekasse.jpg"
-                            alt="site de l' association la békasse fait par Axel Schwindenhammer"
-                        />
-                        <div class="workElt__content">
-                            <h3 class="workElt__title">la békasse</h3>
-                            <p class="workElt__description">
-                                Site d' une asso en Réact/symfony
-                            </p>
-                            <a class="workElt__link" href="">La Békasse</a>
-                        </div>
-                    </article>
-                    <article class="workElt">
-                        <img
-                            class="workElt__img"
-                            src="assets/images/capture_bekasse.jpg"
-                            alt="site de l' association la békasse fait par Axel Schwindenhammer"
-                        />
-                        <div class="workElt__content">
-                            <h3 class="workElt__title">la békasse</h3>
-                            <p class="workElt__description">
-                                Site d' une asso en Réact/symfony
-                            </p>
-                            <a class="workElt__link" href="">La Békasse</a>
-                        </div>
-                    </article>
+                    <?php endforeach; ?>
                 </div>
             </section>
             <section class="sectionTools">
