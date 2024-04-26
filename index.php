@@ -47,6 +47,7 @@
                     </div>
                 </article>
             </section>
+            <!-- SECTION PROJECTS ------------------>
             <section class="sectionWork" id="work">
             <?php
             $projectStatement = $db->prepare(
@@ -90,98 +91,34 @@
                     <?php endforeach; ?>
                 </div>
             </section>
+            <!--    SECTION TOOLS -------------------------->
+            <?php
+            $toolsStatement = $db->prepare(
+              "SELECT name, picture, url, alt_seo FROM technos WHERE is_enabled=TRUE",
+            );
+            $toolsStatement->execute();
+            $tools = $toolsStatement->fetchAll();
+            ?>
             <section class="sectionTools">
                 <div class="sectionTools__container">
+                <?php foreach ($tools as $tool): ?>
                     <article>
                         <img
                             class="sectionTools__img"
-                            src="assets/icons/html.png"
-                            alt="logo html"
+                            src="assets/icons/<?php echo $tool[
+                              "picture"
+                            ]; ?>"
+                            alt="<?php echo $tool[
+                              "alt_seo"
+                            ]; ?>"
                             height="80"
                             width="80"
                         />
-                        <h3 class="sectionTools__title">HTML 5</h3>
+                        <h3 class="sectionTools__title"><?php echo $tool[
+                          "name"
+                        ]; ?></h3>
                     </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/css.png"
-                            alt="logo css"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">CSS 3</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/react.png"
-                            alt="logo react react.js reactjs"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">React</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/js.png"
-                            alt="logo javascript"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Javascript</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/express-js.png"
-                            alt="express js expressjs express.js"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Express js</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/figma.png"
-                            alt="logo figma"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Figma</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/git.png"
-                            alt="logo git"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Git</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/nodejs.png"
-                            alt="logo node.js nodejs node"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Node.js</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/tailwind.png"
-                            alt="logo tailwindcss"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Tailwind CSS</h3>
-                    </article>
+                <?php endforeach; ?>
                 </div>
             </section>
             <section class="sectionContact" id="contact">
