@@ -71,21 +71,15 @@
                         />
                         <div class="workElt__content">
                             <h3 class="workElt__title">
-                              <?php echo $project[
-                                "name"
-                              ]; ?>
+                              <?php echo $project["name"]; ?>
                             </h3>
                             <p class="workElt__description">
-                                <?php echo $project[
-                                  "description_short"
-                                ]; ?>
+                                <?php echo $project["description_short"]; ?>
                             </p>
                             <a class="workElt__link" href="<?php echo $project[
                               "url"
                             ]; ?>">
-                            <?php echo $project[
-                              "name"
-                            ]; ?></a>
+                            <?php echo $project["name"]; ?></a>
                         </div>
                     </article>
                     <?php endforeach; ?>
@@ -105,12 +99,8 @@
                     <article>
                         <img
                             class="sectionTools__img"
-                            src="assets/icons/<?php echo $tool[
-                              "picture"
-                            ]; ?>"
-                            alt="<?php echo $tool[
-                              "alt_seo"
-                            ]; ?>"
+                            src="assets/icons/<?php echo $tool["picture"]; ?>"
+                            alt="<?php echo $tool["alt_seo"]; ?>"
                             height="80"
                             width="80"
                         />

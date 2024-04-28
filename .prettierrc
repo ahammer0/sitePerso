@@ -2,7 +2,7 @@
 {
   "parser": "php",
   "plugins": ["@prettier/plugin-php"],
-  "printWidth": 60,
+  "printWidth": 80,
   "tabWidth": 2,
   "useTabs": false,
   "phpVersion": "8.2"
