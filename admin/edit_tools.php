@@ -22,7 +22,7 @@ if (isset($_POST) && isset($_POST["id"])) {
   <title>Édition de la tool <?php echo $tool["name"]; ?></title>
 </head>
 <body>
-<form action="edit_tools_submit.php" method="POST">
+<form action="edit_tools_submit.php" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="id" value="<?php echo $_POST["id"]; ?>"/>
   <div>
     <label for="name">Nom de la tool</label>
@@ -30,7 +30,10 @@ if (isset($_POST) && isset($_POST["id"])) {
   </div>
   <div>
     <label for="picture">Nom du fichier icone</label>
-    <input type="text" name="picture" value="<?php echo $tool["picture"]; ?>"/>
+    <input type="file" name="picture" />
+    <input type="hidden" name="picture" value="<?php echo $tool[
+      "picture"
+    ]; ?>"/>
   </div>
   <div>
     <label for="alt_seo">Description de l' icone</label>
@@ -64,14 +67,15 @@ if (isset($_POST) && isset($_POST["id"])) {
   <title>Création d' une tool</title>
 </head>
 <body>
-<form action="edit_tools_submit.php" method="POST">
+<form action="edit_tools_submit.php" method="POST" enctype="multipart/form-data">
   <div>
     <label for="name">Nom de la tool</label>
     <input type="text" name="name" />
   </div>
   <div>
     <label for="picture">Nom du fichier icone</label>
-    <input type="text" name="picture" />
+    <input type="file" name="picture"/>
+    <input type="hidden" name="picture" value=""/>
   </div>
   <div>
     <label for="alt_seo">Description de l' icone</label>

@@ -27,6 +27,30 @@ if (isset($_POST["is_enabled"])) {
   $is_enabled = false;
 }
 
+if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0) {
+  if ($_FILES["picture"]["size"] > 1000000) {
+    echo "l' image est trop volumineuse";
+    return;
+  }
+  $fileInfo = pathinfo($_FILES["picture"]["name"]);
+  $extension = $fileInfo["extension"];
+  $allowedExtensions = ["jpg", "jpeg", "gif", "png"];
+  if (!in_array($extension, $allowedExtensions)) {
+    echo "le fichier envoyé ne comporte pas une extension conforme <br/> l' extension {$extension} n' est pas autorisée";
+    return;
+  }
+  $path = __DIR__ . "/../assets/icons/";
+  if (!is_dir($path)) {
+    echo "le dossier {$path} n' existe pas !";
+    return;
+  }
+  move_uploaded_file(
+    $_FILES["picture"]["tmp_name"],
+    $path . basename($_FILES["picture"]["name"]),
+  );
+  $picture = basename($_FILES["picture"]["name"]);
+}
+
 if ($isEditing) {
   $toolStatement = $db->prepare(
     "UPDATE technos SET name=:name, picture=:picture, alt_seo=:alt_seo, url=:url, is_enabled=:is_enabled WHERE tech_id=:tech_id",
