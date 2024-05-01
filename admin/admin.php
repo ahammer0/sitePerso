@@ -48,5 +48,52 @@ require_once __DIR__ . "/../dbConnect.php"; ?>
     </div>
     <a href="edit_tools.php"><button>Créer une tool</button></a>
   </section>
+  <section class="sectionWork" id="work">
+  <?php
+  $projectStatement = $db->prepare("SELECT * FROM projects");
+  $projectStatement->execute();
+  $projects = $projectStatement->fetchAll();
+  ?>
+      <h1 class="sectionWork__title">Mon Travail</h1>
+      <div class="sectionWork__eltContainer">
+      <?php foreach ($projects as $project): ?>
+          <article class="workElt">
+              <img
+                  class="workElt__img"
+                  src="../assets/images/<?php echo $project["picture"]; ?>"
+                  alt="<?php echo $project[
+                    "description_short"
+                  ]; ?> fait par Axel Schwindenhammer"
+              />
+              <div class="workElt__content">
+                  <h3 class="workElt__title">
+                    <?php echo $project["name"]; ?>
+                  </h3>
+                  <p class="workElt__description">
+                      <?php echo $project["description_short"]; ?>
+                  </p>
+                  <a class="workElt__link" href="<?php echo $project[
+                    "url"
+                  ]; ?>">
+                  <?php echo $project["name"]; ?></a>
+              </div>
+              <form action="edit_project.php" method="post">
+                <input type="hidden" name="id" value="<?php echo $project[
+                  "project_id"
+                ]; ?>">
+                <button type="submit">Éditer</button>
+              </form>
+              <form action="rm_project.php" method="post">
+                <input type="hidden" name="id" value="<?php echo $project[
+                  "project_id"
+                ]; ?>">
+                <button type="submit">Supprimer</button>
+              </form>
+              <div><?php echo $project["is_enabled"] ? "activé" : ""; ?></div>
+          </article>
+          <?php endforeach; ?>
+      </div>
+    <a href="edit_project.php"><button>Créer un projet</button></a>
+  </section>
 </body>
 </html>
