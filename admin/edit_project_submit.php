@@ -7,7 +7,8 @@ if (
   !isset($_POST["picture"]) ||
   !isset($_POST["description"]) ||
   !isset($_POST["description_short"]) ||
-  !isset($_POST["url"])
+  !isset($_POST["url"]) ||
+  !isset($_POST["used_technos"])
 ) {
   echo "les données transmises ne sont pas conformes";
   return;
@@ -17,6 +18,13 @@ $picture = htmlspecialchars($_POST["picture"]);
 $description = htmlspecialchars($_POST["description"]);
 $description_short = htmlspecialchars($_POST["description_short"]);
 $url = htmlspecialchars($_POST["url"]);
+
+$usedTechnos = $_POST["used_technos"];
+/* $usedTechnos = $db->quote($_POST["used_technos"]); */
+if (json_decode($usedTechnos) == null) {
+  echo "le json des technos n' est pas valide";
+  return;
+}
 if (isset($_POST["id"]) && is_numeric($_POST["id"])) {
   $id = $_POST["id"];
   $isEditing = true;
@@ -55,7 +63,7 @@ if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0) {
 
 if ($isEditing) {
   $toolStatement = $db->prepare(
-    "UPDATE projects SET name=:name, picture=:picture, description=:description, description_short=:description_short, url=:url, is_enabled=:is_enabled WHERE project_id=:project_id",
+    "UPDATE projects SET name=:name, picture=:picture, description=:description, description_short=:description_short, url=:url, is_enabled=:is_enabled, techs=:techs WHERE project_id=:project_id",
   );
   $toolStatement->execute([
     "name" => $name,
@@ -65,10 +73,11 @@ if ($isEditing) {
     "url" => $url,
     "is_enabled" => $is_enabled ? 1 : 0,
     "project_id" => $id,
+    "techs" => $usedTechnos,
   ]);
 } else {
   $insertStatement = $db->prepare(
-    "INSERT INTO projects (name,picture,description,description_short,url,is_enabled) VALUES (:name,:picture,:description,:description_short,:url,:is_enabled)",
+    "INSERT INTO projects (name,picture,description,description_short,url,is_enabled,techs) VALUES (:name,:picture,:description,:description_short,:url,:is_enabled,:techs)",
   );
   $insertStatement->execute([
     "name" => $name,
@@ -77,6 +86,7 @@ if ($isEditing) {
     "description_short" => $description_short,
     "url" => $url,
     "is_enabled" => $is_enabled ? 1 : 0,
+    "techs" => $usedTechnos,
   ]);
 }
 echo "la requete à bien étée prise en compte";

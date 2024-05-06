@@ -246,3 +246,12 @@ footer {
     justify-content: center;
     align-items: center;
 }
+.flex{
+  display:flex;
+}
+.flex-wrap{
+  flex-wrap:  wrap;
+}
+.bg-primary{
+  background-color:var(--primary);
+}

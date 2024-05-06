@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . "/../dbConnect.php";
 
+$toolStatement = $db->prepare("SELECT tech_id, name, picture FROM technos");
+$toolStatement->execute();
+$tools = $toolStatement->fetchAll();
+
 if (isset($_POST) && isset($_POST["id"])) {
 
   if (!is_numeric($_POST["id"])) {
@@ -17,11 +21,14 @@ if (isset($_POST) && isset($_POST["id"])) {
   ]);
   $project = $projectStatement->fetchAll()[0];
   ?>
+<!--------- EDITION ------->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Édition du projet <?php echo $project["name"]; ?></title>
+  <script src="tool_picker.js" defer ></script>
+  <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
 <form action="edit_project_submit.php" method="POST" enctype="multipart/form-data">
@@ -53,6 +60,14 @@ if (isset($_POST) && isset($_POST["id"])) {
     <label for ="url">Url du projet en ligne</label>
     <input type="url" name="url" value="<?php echo $project["url"]; ?>"/>
   </div>
+  <div id="tool_picker">
+    <input type="hidden" name="used_technos" value='<?php echo $project[
+      "techs"
+    ]; ?>'/>
+    <input type="hidden" name="all_technos" value='<?php echo json_encode(
+      $tools,
+    ); ?>'/>
+  </div>
   <div>
     <label for="is_enabled">Est visible ?</label>
     <input type="checkbox" name="is_enabled" value="1" <?php echo $project[
@@ -69,12 +84,14 @@ if (isset($_POST) && isset($_POST["id"])) {
 <?php
 } else {
    ?>
-
+<!--------CREATION---->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Création d'un projet</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script src="tool_picker.js" defer ></script>
 </head>
 <body>
 <form action="edit_project_submit.php" method="POST" enctype="multipart/form-data">
@@ -98,6 +115,12 @@ if (isset($_POST) && isset($_POST["id"])) {
   <div>
     <label for ="url">Url du projet</label>
     <input type="url" name="url" />
+  </div>
+  <div id="tool_picker">
+    <input type="hidden" name="used_technos" value="[]"/>
+    <input type="hidden" name="all_technos" value='<?php echo json_encode(
+      $tools,
+    ); ?>'/>
   </div>
   <div>
     <label for="is_enabled">Est visible ?</label>
