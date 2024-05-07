@@ -1,5 +1,11 @@
 <?php
-require_once __DIR__ . "/../dbConnect.php"; ?>
+require_once __DIR__ . "/../dbConnect.php";
+session_start();
+if (!isset($_SESSION["LOGGED_USER"])) {
+  header("Location:login.php");
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,6 +26,15 @@ require_once __DIR__ . "/../dbConnect.php"; ?>
                 <h1>
                   Admin
                 </h1>
+                <div>
+                  <h1>Utilisateur connecté :<?php echo $_SESSION["LOGGED_USER"][
+                    "pseudo"
+                  ]; ?></h1>
+                  <form action="login_submit.php" method="post">
+                    <input type="hidden" name="logout"/>
+                    <button class="btn" type="submit">Déconnection</button>
+                  </form>
+                </div>
                 <div class="navbar navbar__linkBlock">
                     <a class="navbar navbar__link" href="../">A Propos</a>
                     <a class="navbar navbar__link" href="../#work">Mon Travail</a>

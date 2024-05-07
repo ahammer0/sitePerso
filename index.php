@@ -181,6 +181,7 @@
         </main>
         <footer class="footer">
             <a href="https://github.com/ahammer0">Mon github</a>
+             <a href="admin/admin.php">Admin</a>
         </footer>
     </body>
 </html>
