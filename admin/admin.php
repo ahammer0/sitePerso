@@ -10,6 +10,23 @@ require_once __DIR__ . "/../dbConnect.php"; ?>
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
+        <header>
+            <nav class="navbar">
+                <img
+                    src="../assets/icons/dev.png"
+                    alt="logo developpeur web axel schwindenhammer"
+                    class="navbar navbar__logo"
+                />
+                <h1>
+                  Admin
+                </h1>
+                <div class="navbar navbar__linkBlock">
+                    <a class="navbar navbar__link" href="../">A Propos</a>
+                    <a class="navbar navbar__link" href="../#work">Mon Travail</a>
+                    <a class="navbar navbar__link" href="../#contact">Contact</a>
+                </div>
+            </nav>
+        </header>
   <?php
   $toolsStatement = $db->prepare("SELECT * FROM technos");
   $toolsStatement->execute();
