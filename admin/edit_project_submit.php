@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . "/../dbConnect.php";
 
 if (
@@ -11,8 +12,18 @@ if (
   !isset($_POST["used_technos"])
 ) {
   echo "les données transmises ne sont pas conformes";
+  header("Refresh:3;url=admin.php");
   return;
 }
+if (
+  !isset($_SESSION["LOGGED_USER"]) ||
+  $_SESSION["LOGGED_USER"]["roles"] != "admin"
+) {
+  echo "Seuls les administrateurs peuvent enregistrer des données";
+  header("Refresh:2;url=admin.php");
+  return;
+}
+
 $name = htmlspecialchars($_POST["name"]);
 $picture = htmlspecialchars($_POST["picture"]);
 $description = htmlspecialchars($_POST["description"]);

@@ -51,6 +51,13 @@ require_once __DIR__ . "/../dbConnect.php";
                   <button class="btn" type="submit">Valider</button>
                 </div>
               </form>
+              <form action="login_submit.php" method="post">
+                <input class="input" type="hidden" name="login" value="invite">
+                <input class="input" type="hidden" name="password" value="invite">
+                <div>
+                  <button class="btn" type="submit">Connexion invité</button>
+                </div>
+              </form>
             </div>
           <?php else: ?>
           <div>
