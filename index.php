@@ -51,7 +51,7 @@
             <section class="sectionWork" id="work">
             <?php
             $projectStatement = $db->prepare(
-              "SELECT name, description_short, picture, url FROM projects",
+              "SELECT name, description_short, picture, url, project_id FROM projects WHERE is_enabled=TRUE ORDER BY project_id DESC LIMIT 3",
             );
             $projectStatement->execute();
             $projects = $projectStatement->fetchAll();

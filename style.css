@@ -98,9 +98,10 @@ button:focus{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content:center;
 }
 .workElt {
-    max-width: 18rem;
+    width: 18rem;
     margin: 1rem;
     background-color: var(--light-gray);
 }
