@@ -8,10 +8,10 @@ const renderPicker = ()=>{
   pickerDiv.innerHTML=""
 
   allTechList=document.createElement("div")
-  allTechList.classList.add("flex","flex-wrap","bg-primary")
+  allTechList.classList.add("flex","flex-wrap","bg-light-gray","border")
   
   usedTechList=document.createElement("div")
-  usedTechList.classList.add("flex","flex-wrap","bg-primary")
+  usedTechList.classList.add("flex","flex-wrap","bg-light-gray","border")
 
   const addTechno = (tech)=>{
     usedTechnos=[...usedTechnos,tech]

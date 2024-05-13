@@ -118,7 +118,8 @@
                             Travaillons ensemble !
                         </h3>
                         <p>
-                            Vous avez un projet ? Vous souhaitez m' embaucher ?
+                            Vous avez un projet ? <br/>
+                            Vous souhaitez m' embaucher ?<br/>
                             <br />
                             J' ai hâte de vous lire.
                         </p>
@@ -171,7 +172,7 @@
                                 rows="5"
                                 required
                             ></textarea>
-                            <button class="sectionContact__form-submitButton" type="submit" >
+                            <button class="btn sectionContact__form-submitButton" type="submit" >
                                 Envoyer
                             </button>
                         </div>

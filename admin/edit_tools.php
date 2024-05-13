@@ -2,7 +2,6 @@
 require_once __DIR__ . "/../dbConnect.php";
 
 if (isset($_POST) && isset($_POST["id"])) {
-
   if (!is_numeric($_POST["id"])) {
     echo ' l\'id transmis n\'est pas conforme';
     return;
@@ -14,85 +13,80 @@ if (isset($_POST) && isset($_POST["id"])) {
     "tech_id" => $id,
   ]);
   $tool = $toolStatement->fetchAll()[0];
-  ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Édition de la tool <?php echo $tool["name"]; ?></title>
-</head>
-<body>
-<form action="edit_tools_submit.php" method="POST" enctype="multipart/form-data">
-  <input type="hidden" name="id" value="<?php echo $_POST["id"]; ?>"/>
-  <div>
-    <label for="name">Nom de la tool</label>
-    <input type="text" name="name" value="<?php echo $tool["name"]; ?>"/>
-  </div>
-  <div>
-    <label for="picture">Nom du fichier icone</label>
-    <input type="file" name="picture" />
-    <input type="hidden" name="picture" value="<?php echo $tool[
-      "picture"
-    ]; ?>"/>
-  </div>
-  <div>
-    <label for="alt_seo">Description de l' icone</label>
-    <input type="text" name="alt_seo" value="<?php echo $tool["alt_seo"]; ?>"/>
-  </div>
-  <div>
-    <label for ="url">Url de la techno</label>
-    <input type="text" name="url" value="<?php echo $tool["url"]; ?>"/>
-  </div>
-  <div>
-    <label for="is_enabled">Est visible ?</label>
-    <input type="checkbox" name="is_enabled" value="1" <?php echo $tool[
-      "is_enabled"
-    ]
-      ? "checked"
-      : ""; ?>/>
-  </div>
-  
-  <button type="submit">Valider</button>
-</body>
-</html>
-
-<?php
+  $isEdit = true;
 } else {
-   ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Création d' une tool</title>
-</head>
-<body>
-<form action="edit_tools_submit.php" method="POST" enctype="multipart/form-data">
-  <div>
-    <label for="name">Nom de la tool</label>
-    <input type="text" name="name" />
-  </div>
-  <div>
-    <label for="picture">Nom du fichier icone</label>
-    <input type="file" name="picture"/>
-    <input type="hidden" name="picture" value=""/>
-  </div>
-  <div>
-    <label for="alt_seo">Description de l' icone</label>
-    <input type="text" name="alt_seo" />
-  </div>
-  <div>
-    <label for ="url">Url de la techno</label>
-    <input type="text" name="url" />
-  </div>
-  <div>
-    <label for="is_enabled">Est visible ?</label>
-    <input type="checkbox" name="is_enabled" value="1"/>
-  </div>
-  
-  <button type="submit">Valider</button>
-</body>
-</html>
-<?php
+  $isEdit = false;
 }
 ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+  <title>
+    <?php if ($isEdit) {
+      echo "Édition de la tool : " . $tool["name"];
+    } else {
+      echo "Création d' une tool";
+    } ?>
+  </title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body class="">
+  <div class="modalBox__background">
+    <div class="modalBox">
+      <h1 class="modalBox__element">
+        <?php if ($isEdit) {
+          echo "Édition de la tool : " . $tool["name"];
+        } else {
+          echo "Création d' une tool";
+        } ?>
+      </h1>
+      <form class="form modalBox__element" action="edit_tools_submit.php" method="POST" enctype="multipart/form-data">
+        <?php if (
+          $isEdit
+        ): ?><input type="hidden" name="id" value="<?php echo $_POST[
+  "id"
+]; ?>"/><?php endif; ?>
+        <div class="form__item">
+          <label for="name">Nom de la tool</label>
+          <input class="input" type="text" name="name" value="<?php echo $isEdit
+            ? $tool["name"]
+            : ""; ?>"/>
+        </div>
+        <div class="form__item">
+          <label for="picture">Nom du fichier icone</label>
+          <input class="input" type="file" name="picture" />
+          <input type="hidden" name="picture" value="<?php echo $isEdit
+            ? $tool["picture"]
+            : ""; ?>"/>
+        </div>
+        <div class="form__item">
+          <label for="alt_seo">Description de l' icone</label>
+          <input class="input" type="text" name="alt_seo" value="<?php echo $isEdit
+            ? $tool["alt_seo"]
+            : ""; ?>"/>
+        </div>
+        <div class="form__item">
+          <label for ="url">Url de la techno</label>
+          <input class="input" type="text" name="url" value="<?php echo $isEdit
+            ? $tool["url"]
+            : ""; ?>"/>
+        </div>
+        <div class="form__item">
+          <label for="is_enabled">Est visible ?</label>
+          <input type="checkbox" name="is_enabled" value="1" <?php echo $isEdit
+            ? ($tool["is_enabled"]
+              ? "checked"
+              : "")
+            : ""; ?>/>
+        </div>
+        
+        <button class="btn btn--success" type="submit">Valider</button>
+        <a href="admin.php"><button class="btn">Annuler</button></a>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -30,7 +30,7 @@ require_once __DIR__ . "/../dbConnect.php";
             </nav>
         </header>
         <div class="modalBox__background">
-          <div class="modalBox">
+          <div class="modalBox flex flex-row">
           <?php if (!isset($_SESSION["LOGGED_USER"])): ?>
             <div class="modalBox__element">
               <img src="../assets/icons/dev.png" alt="">

@@ -60,25 +60,27 @@ if (!isset($_SESSION["LOGGED_USER"])) {
             width="80"
         />
         <h3 class="sectionTools__title"><?php echo $tool["name"]; ?></h3>
-        <form action="edit_tools.php" method="post">
-          <input type="hidden" name="id" value="<?php echo $tool[
-            "tech_id"
-          ]; ?>">
-          <button type="submit">Éditer</button>
-        </form>
-        <form action="rm_tool.php" method="post">
-          <input type="hidden" name="id" value="<?php echo $tool[
-            "tech_id"
-          ]; ?>">
-          <button type="submit">Supprimer</button>
-        </form>
-        <?php if ($tool["is_enabled"]): ?>
-          <div>Activée</div>
+        <div class="sectionTools__buttons">
+          <form action="edit_tools.php" method="post">
+            <input type="hidden" name="id" value="<?php echo $tool[
+              "tech_id"
+            ]; ?>">
+            <button class="btn" type="submit">Éditer</button>
+          </form>
+          <form action="rm_tool.php" method="post">
+            <input type="hidden" name="id" value="<?php echo $tool[
+              "tech_id"
+            ]; ?>">
+            <button class="btn" type="submit">Supprimer</button>
+          </form>
+          <?php if ($tool["is_enabled"]): ?>
+            <button class="btn btn--success" disabled>Activée</button>
         <?php endif; ?>
+        </div>
       </article>
     <?php endforeach; ?>
     </div>
-    <a href="edit_tools.php"><button>Créer une tool</button></a>
+    <a href="edit_tools.php"><button class="btn">Créer une tool</button></a>
   </section>
   <section class="sectionWork" id="work">
   <?php
@@ -109,23 +111,29 @@ if (!isset($_SESSION["LOGGED_USER"])) {
                   ]; ?>">
                   <?php echo $project["name"]; ?></a>
               </div>
-              <form action="edit_project.php" method="post">
-                <input type="hidden" name="id" value="<?php echo $project[
-                  "project_id"
-                ]; ?>">
-                <button type="submit">Éditer</button>
-              </form>
-              <form action="rm_project.php" method="post">
-                <input type="hidden" name="id" value="<?php echo $project[
-                  "project_id"
-                ]; ?>">
-                <button type="submit">Supprimer</button>
-              </form>
-              <div><?php echo $project["is_enabled"] ? "activé" : ""; ?></div>
+              <div class="workElt__content">
+                <form action="edit_project.php" method="post">
+                  <input type="hidden" name="id" value="<?php echo $project[
+                    "project_id"
+                  ]; ?>">
+                  <button class="btn" type="submit">Éditer</button>
+                </form>
+                <form action="rm_project.php" method="post">
+                  <input type="hidden" name="id" value="<?php echo $project[
+                    "project_id"
+                  ]; ?>">
+                  <button class="btn" type="submit">Supprimer</button>
+                </form>
+                <div>
+                  <?php if ($project["is_enabled"]): ?>
+                    <button class="btn btn--success" disabled>Activée</button>
+                  <?php endif; ?>
+                </div>
+              </div>
           </article>
           <?php endforeach; ?>
       </div>
-    <a href="edit_project.php"><button>Créer un projet</button></a>
+    <a href="edit_project.php"><button class="btn">Créer un projet</button></a>
   </section>
 </body>
 </html>
