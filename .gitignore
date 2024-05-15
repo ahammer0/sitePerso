@@ -2,5 +2,6 @@
 node_modules/
 yarn-error.log
 /media/
+env.php
 
 /vendor/

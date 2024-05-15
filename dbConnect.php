@@ -1,10 +1,11 @@
 <?php
+require_once __DIR__ . "/env.php";
 try {
   global $db;
   $db = new PDO(
-    "mysql:host=localhost:3306;dbname=ahammer;charset=utf8",
-    "root",
-    "",
+    "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8",
+    DB_USER,
+    DB_PASS,
   );
 } catch (Exception $e) {
   die("Erreur : " . $e->getMessage());
