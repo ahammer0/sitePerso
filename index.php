@@ -1,6 +1,8 @@
-<?php require_once __DIR__ . "/dbConnect.php";
+<?php
 require_once __DIR__ . "/env.php";
+require_once PROJROOT . "/dbConnect.php";
 require_once PROJROOT . "/entity/media.php";
+require_once PROJROOT . "/entity/tool.php";
 ?>
 <!doctype html>
 <html lang="fr">
@@ -95,39 +97,23 @@ require_once PROJROOT . "/entity/media.php";
                 </div>
             </section>
             <!--    SECTION TOOLS -------------------------->
-            <?php
-            $toolsStatement = $db->prepare(
-              "SELECT name, picture, url, alt_seo FROM technos WHERE is_enabled=TRUE",
-            );
-            $toolsStatement->execute();
-            $tools = $toolsStatement->fetchAll();
-            ?>
+            <?php $tools = Tool::getAllEnabled(); ?>
             <section class="sectionTools">
                 <div class="sectionTools__container">
-                <?php foreach ($tools as $tool):
-                  try {
-                    $picture = new Media();
-                    $picture->setId($tool["picture"]);
-                    $picturePath = $picture->getAbsPath();
-                  } catch (Exception $e) {
-                    $picturePath = "/assets/icons/dev.png";
-                  } ?>
-                    <a href="<?php echo $tool["url"]; ?>">
+                <?php foreach ($tools as $tool): ?>
+                    <a href="<?php echo $tool->getUrl(); ?>">
                       <article>
                           <img
                               class="sectionTools__img"
-                              src="<?php echo $picturePath; ?>"
-                              alt="<?php echo $tool["alt_seo"]; ?>"
+                              src="<?php echo $tool->getPicturePath(); ?>"
+                              alt="<?php echo $tool->getAltSeo(); ?>"
                               height="80"
                               width="80"
                           />
-                          <h3 class="sectionTools__title"><?php echo $tool[
-                            "name"
-                          ]; ?></h3>
+                          <h3 class="sectionTools__title"><?php echo $tool->getName(); ?></h3>
                       </article>
                     </a>
-                <?php
-                endforeach; ?>
+                <?php endforeach; ?>
                 </div>
             </section>
             <section class="sectionContact" id="contact">
