@@ -1,3 +1,7 @@
+<?php require_once __DIR__ . "/dbConnect.php";
+require_once __DIR__ . "/env.php";
+require_once PROJROOT . "/entity/media.php";
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -46,145 +50,82 @@
                     </div>
                 </article>
             </section>
+            <!-- SECTION PROJECTS ------------------>
             <section class="sectionWork" id="work">
+            <?php
+            $projectStatement = $db->prepare(
+              "SELECT name, description_short, picture, url, project_id FROM projects WHERE is_enabled=TRUE ORDER BY project_id DESC LIMIT 3",
+            );
+            $projectStatement->execute();
+            $projects = $projectStatement->fetchAll();
+            ?>
                 <h1 class="sectionWork__title">Mon Travail</h1>
                 <div class="sectionWork__eltContainer">
+                <?php foreach ($projects as $project):
+                  try {
+                    $picture = new Media();
+                    $picture->setId($project["picture"]);
+                    $picturePath = $picture->getAbsPath();
+                  } catch (Exception $e) {
+                    $picturePath = "/assets/icons/dev.png";
+                  } ?>
                     <article class="workElt">
                         <img
                             class="workElt__img"
-                            src="assets/images/capture_bekasse.jpg"
-                            alt="site de l' association la békasse fait par Axel Schwindenhammer"
+                            src="<?php echo $picturePath; ?>"
+                            alt="<?php echo $project[
+                              "description_short"
+                            ]; ?> fait par Axel Schwindenhammer"
                         />
                         <div class="workElt__content">
-                            <h3 class="workElt__title">la békasse</h3>
+                            <h3 class="workElt__title">
+                              <?php echo $project["name"]; ?>
+                            </h3>
                             <p class="workElt__description">
-                                Site d' une asso en Réact/symfony
+                                <?php echo $project["description_short"]; ?>
                             </p>
-                            <a class="workElt__link" href="">La Békasse</a>
+                            <a class="workElt__link" href="<?php echo $project[
+                              "url"
+                            ]; ?>">
+                            <?php echo $project["name"]; ?></a>
                         </div>
                     </article>
-                    <article class="workElt">
-                        <img
-                            class="workElt__img"
-                            src="assets/images/capture_bekasse.jpg"
-                            alt="site de l' association la békasse fait par Axel Schwindenhammer"
-                        />
-                        <div class="workElt__content">
-                            <h3 class="workElt__title">la békasse</h3>
-                            <p class="workElt__description">
-                                Site d' une asso en Réact/symfony
-                            </p>
-                            <a class="workElt__link" href="">La Békasse</a>
-                        </div>
-                    </article>
-                    <article class="workElt">
-                        <img
-                            class="workElt__img"
-                            src="assets/images/capture_bekasse.jpg"
-                            alt="site de l' association la békasse fait par Axel Schwindenhammer"
-                        />
-                        <div class="workElt__content">
-                            <h3 class="workElt__title">la békasse</h3>
-                            <p class="workElt__description">
-                                Site d' une asso en Réact/symfony
-                            </p>
-                            <a class="workElt__link" href="">La Békasse</a>
-                        </div>
-                    </article>
+                    <?php
+                endforeach; ?>
                 </div>
             </section>
+            <!--    SECTION TOOLS -------------------------->
+            <?php
+            $toolsStatement = $db->prepare(
+              "SELECT name, picture, url, alt_seo FROM technos WHERE is_enabled=TRUE",
+            );
+            $toolsStatement->execute();
+            $tools = $toolsStatement->fetchAll();
+            ?>
             <section class="sectionTools">
                 <div class="sectionTools__container">
+                <?php foreach ($tools as $tool):
+                  try {
+                    $picture = new Media();
+                    $picture->setId($tool["picture"]);
+                    $picturePath = $picture->getAbsPath();
+                  } catch (Exception $e) {
+                    $picturePath = "/assets/icons/dev.png";
+                  } ?>
                     <article>
                         <img
                             class="sectionTools__img"
-                            src="assets/icons/html.png"
-                            alt="logo html"
+                            src="<?php echo $picturePath; ?>"
+                            alt="<?php echo $tool["alt_seo"]; ?>"
                             height="80"
                             width="80"
                         />
-                        <h3 class="sectionTools__title">HTML 5</h3>
+                        <h3 class="sectionTools__title"><?php echo $tool[
+                          "name"
+                        ]; ?></h3>
                     </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/css.png"
-                            alt="logo css"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">CSS 3</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/react.png"
-                            alt="logo react react.js reactjs"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">React</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/js.png"
-                            alt="logo javascript"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Javascript</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/express-js.png"
-                            alt="express js expressjs express.js"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Express js</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/figma.png"
-                            alt="logo figma"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Figma</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/git.png"
-                            alt="logo git"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Git</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/nodejs.png"
-                            alt="logo node.js nodejs node"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Node.js</h3>
-                    </article>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="assets/icons/tailwind.png"
-                            alt="logo tailwindcss"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title">Tailwind CSS</h3>
-                    </article>
+                <?php
+                endforeach; ?>
                 </div>
             </section>
             <section class="sectionContact" id="contact">
@@ -194,7 +135,8 @@
                             Travaillons ensemble !
                         </h3>
                         <p>
-                            Vous avez un projet ? Vous souhaitez m' embaucher ?
+                            Vous avez un projet ? <br/>
+                            Vous souhaitez m' embaucher ?<br/>
                             <br />
                             J' ai hâte de vous lire.
                         </p>
@@ -247,7 +189,7 @@
                                 rows="5"
                                 required
                             ></textarea>
-                            <button class="sectionContact__form-submitButton" type="submit" >
+                            <button class="btn sectionContact__form-submitButton" type="submit" >
                                 Envoyer
                             </button>
                         </div>
@@ -257,6 +199,7 @@
         </main>
         <footer class="footer">
             <a href="https://github.com/ahammer0">Mon github</a>
+             <a href="admin/admin.php">Admin</a>
         </footer>
     </body>
 </html>
