@@ -46,7 +46,11 @@ if (!isset($_SESSION["LOGGED_USER"])) {
             </nav>
         </header>
   <?php
-  $toolsStatement = $db->prepare("SELECT * FROM technos");
+  if ($_SESSION["LOGGED_USER"]["roles"] === "admin") {
+    $toolsStatement = $db->prepare("SELECT * FROM technos");
+  } else {
+    $toolsStatement = $db->prepare("SELECT * FROM technos WHERE is_enabled=1");
+  }
   $toolsStatement->execute();
   $tools = $toolsStatement->fetchAll();
   ?>
@@ -95,7 +99,13 @@ if (!isset($_SESSION["LOGGED_USER"])) {
   </section>
   <section class="sectionWork" id="work">
   <?php
-  $projectStatement = $db->prepare("SELECT * FROM projects");
+  if ($_SESSION["LOGGED_USER"]["roles"] === "admin") {
+    $projectStatement = $db->prepare("SELECT * FROM projects");
+  } else {
+    $projectStatement = $db->prepare(
+      "SELECT * FROM projects WHERE is_enabled=1",
+    );
+  }
   $projectStatement->execute();
   $projects = $projectStatement->fetchAll();
   ?>
