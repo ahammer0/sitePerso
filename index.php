@@ -112,18 +112,20 @@ require_once PROJROOT . "/entity/media.php";
                   } catch (Exception $e) {
                     $picturePath = "/assets/icons/dev.png";
                   } ?>
-                    <article>
-                        <img
-                            class="sectionTools__img"
-                            src="<?php echo $picturePath; ?>"
-                            alt="<?php echo $tool["alt_seo"]; ?>"
-                            height="80"
-                            width="80"
-                        />
-                        <h3 class="sectionTools__title"><?php echo $tool[
-                          "name"
-                        ]; ?></h3>
-                    </article>
+                    <a href="<?php echo $tool["url"]; ?>">
+                      <article>
+                          <img
+                              class="sectionTools__img"
+                              src="<?php echo $picturePath; ?>"
+                              alt="<?php echo $tool["alt_seo"]; ?>"
+                              height="80"
+                              width="80"
+                          />
+                          <h3 class="sectionTools__title"><?php echo $tool[
+                            "name"
+                          ]; ?></h3>
+                      </article>
+                    </a>
                 <?php
                 endforeach; ?>
                 </div>
