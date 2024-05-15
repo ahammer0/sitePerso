@@ -10,6 +10,7 @@ class Media
   private int $timesUsed;
   private string $absolutePath;
   private static $allowedTypes = ["icon", "projectPicture"];
+  private static $defaultPicturePath = "/assets/icons/dev.png";
 
   public function getId(): int
   {
@@ -130,7 +131,8 @@ class Media
     $media = $mediaStatement->fetch();
     /* test $media integrity and throw error if wrong*/
     if (!$media) {
-      throw new Exception("the media requested doesn't exist in database");
+      ///throw new Exception("the media requested doesn't exist in database");
+      $this->absolutePath = self::$defaultPicturePath;
     }
     if ($media) {
       $this->fileName = $media["filename"];
