@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once __DIR__ . "/../dbConnect.php";
+require_once __DIR__ . "/../env.php";
+require_once PROJROOT . "/entity/media.php";
 
 if (
   !isset($_POST) ||
@@ -31,8 +33,7 @@ $description_short = htmlspecialchars($_POST["description_short"]);
 $url = htmlspecialchars($_POST["url"]);
 
 $usedTechnos = $_POST["used_technos"];
-/* $usedTechnos = $db->quote($_POST["used_technos"]); */
-if (json_decode($usedTechnos) == null) {
+if (json_decode($usedTechnos) === null) {
   echo "le json des technos n' est pas valide";
   return;
 }
@@ -60,16 +61,22 @@ if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0) {
     echo "le fichier envoyé ne comporte pas une extension conforme <br/> l' extension {$extension} n' est pas autorisée";
     return;
   }
-  $path = __DIR__ . "/../assets/images/";
+  $path = __DIR__ . "/../media/projectPictures/";
   if (!is_dir($path)) {
     echo "le dossier {$path} n' existe pas !";
     return;
   }
+
+  /* uploaded file is ok, now we can save it */
+
+  $file = new Media();
+  $file->setAll($_FILES["picture"]["name"], "projectPicture");
+
   move_uploaded_file(
     $_FILES["picture"]["tmp_name"],
-    $path . basename($_FILES["picture"]["name"]),
+    PROJROOT . $file->getAbsPath(),
   );
-  $picture = basename($_FILES["picture"]["name"]);
+  $picture = $file->getId();
 }
 
 if ($isEditing) {

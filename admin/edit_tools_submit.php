@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once __DIR__ . "/../dbConnect.php";
+require_once __DIR__ . "/../env.php";
+require_once PROJROOT . "/entity/media.php";
 
 if (
   !isset($_POST) ||
@@ -54,11 +56,18 @@ if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0) {
     echo "le dossier {$path} n' existe pas !";
     return;
   }
-  move_uploaded_file(
-    $_FILES["picture"]["tmp_name"],
-    $path . basename($_FILES["picture"]["name"]),
-  );
-  $picture = basename($_FILES["picture"]["name"]);
+  $file = new Media();
+  $file->setAll($_FILES["picture"]["name"], "icon");
+
+  try {
+    move_uploaded_file(
+      $_FILES["picture"]["tmp_name"],
+      PROJROOT . $file->getAbsPath(),
+    );
+  } catch (Exception $e) {
+    $file->rm();
+  }
+  $picture = $file->getId();
 }
 
 if ($isEditing) {

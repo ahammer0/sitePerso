@@ -1,4 +1,7 @@
-<?php require_once __DIR__ . "/dbConnect.php"; ?>
+<?php require_once __DIR__ . "/dbConnect.php";
+require_once __DIR__ . "/env.php";
+require_once PROJROOT . "/entity/media.php";
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -58,13 +61,18 @@
             ?>
                 <h1 class="sectionWork__title">Mon Travail</h1>
                 <div class="sectionWork__eltContainer">
-                <?php foreach ($projects as $project): ?>
+                <?php foreach ($projects as $project):
+                  try {
+                    $picture = new Media();
+                    $picture->setId($project["picture"]);
+                    $picturePath = $picture->getAbsPath();
+                  } catch (Exception $e) {
+                    $picturePath = "/assets/icons/dev.png";
+                  } ?>
                     <article class="workElt">
                         <img
                             class="workElt__img"
-                            src="assets/images/<?php echo $project[
-                              "picture"
-                            ]; ?>"
+                            src="<?php echo $picturePath; ?>"
                             alt="<?php echo $project[
                               "description_short"
                             ]; ?> fait par Axel Schwindenhammer"
@@ -82,7 +90,8 @@
                             <?php echo $project["name"]; ?></a>
                         </div>
                     </article>
-                    <?php endforeach; ?>
+                    <?php
+                endforeach; ?>
                 </div>
             </section>
             <!--    SECTION TOOLS -------------------------->
@@ -95,11 +104,18 @@
             ?>
             <section class="sectionTools">
                 <div class="sectionTools__container">
-                <?php foreach ($tools as $tool): ?>
+                <?php foreach ($tools as $tool):
+                  try {
+                    $picture = new Media();
+                    $picture->setId($tool["picture"]);
+                    $picturePath = $picture->getAbsPath();
+                  } catch (Exception $e) {
+                    $picturePath = "/assets/icons/dev.png";
+                  } ?>
                     <article>
                         <img
                             class="sectionTools__img"
-                            src="assets/icons/<?php echo $tool["picture"]; ?>"
+                            src="<?php echo $picturePath; ?>"
                             alt="<?php echo $tool["alt_seo"]; ?>"
                             height="80"
                             width="80"
@@ -108,7 +124,8 @@
                           "name"
                         ]; ?></h3>
                     </article>
-                <?php endforeach; ?>
+                <?php
+                endforeach; ?>
                 </div>
             </section>
             <section class="sectionContact" id="contact">

@@ -1,5 +1,9 @@
 <?php
 require_once __DIR__ . "/../dbConnect.php";
+require_once __DIR__ . "/../env.php";
+require_once PROJROOT . "/entity/media.php";
+
+$pictureList = Media::getAllFromType("icon");
 
 if (isset($_POST) && isset($_POST["id"])) {
   if (!is_numeric($_POST["id"])) {
@@ -56,9 +60,20 @@ if (isset($_POST) && isset($_POST["id"])) {
             : ""; ?>"/>
         </div>
         <div class="form__item">
+          <div class="flex flex-row">
+            <?php foreach ($pictureList as $picture): ?>
+              <div>
+                <img
+                  src="<?php echo $picture->getAbsPath(); ?>"
+                  width="30"
+                  height="30"/>
+                <p><?php echo $picture->getId(); ?></p> 
+              </div>
+            <?php endforeach; ?>
+          </div>
           <label for="picture">Nom du fichier icone</label>
           <input class="input" type="file" name="picture" />
-          <input type="hidden" name="picture" value="<?php echo $isEdit
+          <input type="number" name="picture" value="<?php echo $isEdit
             ? $tool["picture"]
             : ""; ?>"/>
         </div>

@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . "/../dbConnect.php";
+require_once __DIR__ . "/../env.php";
+require_once PROJROOT . "/entity/media.php";
+
 session_start();
 if (!isset($_SESSION["LOGGED_USER"])) {
   header("Location:login.php");
@@ -50,11 +53,18 @@ if (!isset($_SESSION["LOGGED_USER"])) {
   <section class="sectionTools">
     <h2>Section Tools</h2>
     <div class="sectionTools__container">
-    <?php foreach ($tools as $tool): ?>
+    <?php foreach ($tools as $tool):
+      try {
+        $picture = new Media();
+        $picture->setId($tool["picture"]);
+        $picturePath = $picture->getAbsPath();
+      } catch (Exception $e) {
+        $picturePath = "/assets/icons/dev.png";
+      } ?>
       <article>
         <img
             class="sectionTools__img"
-            src="./../assets/icons/<?php echo $tool["picture"]; ?>"
+            src="<?php echo $picturePath; ?>"
             alt="<?php echo $tool["alt_seo"]; ?>"
             height="80"
             width="80"
@@ -78,7 +88,8 @@ if (!isset($_SESSION["LOGGED_USER"])) {
         <?php endif; ?>
         </div>
       </article>
-    <?php endforeach; ?>
+    <?php
+    endforeach; ?>
     </div>
     <a href="edit_tools.php"><button class="btn">Créer une tool</button></a>
   </section>
@@ -90,11 +101,18 @@ if (!isset($_SESSION["LOGGED_USER"])) {
   ?>
       <h1 class="sectionWork__title">Mon Travail</h1>
       <div class="sectionWork__eltContainer">
-      <?php foreach ($projects as $project): ?>
+      <?php foreach ($projects as $project):
+        try {
+          $picture = new Media();
+          $picture->setId($project["picture"]);
+          $picturePath = $picture->getAbsPath();
+        } catch (Exception $e) {
+          $picturePath = "/assets/icons/dev.png";
+        } ?>
           <article class="workElt">
               <img
                   class="workElt__img"
-                  src="../assets/images/<?php echo $project["picture"]; ?>"
+                  src="<?php echo $picturePath; ?>"
                   alt="<?php echo $project[
                     "description_short"
                   ]; ?> fait par Axel Schwindenhammer"
@@ -131,7 +149,8 @@ if (!isset($_SESSION["LOGGED_USER"])) {
                 </div>
               </div>
           </article>
-          <?php endforeach; ?>
+          <?php
+      endforeach; ?>
       </div>
     <a href="edit_project.php"><button class="btn">Créer un projet</button></a>
   </section>

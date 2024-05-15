@@ -3,6 +3,8 @@ allTechnos=document.querySelector("div#tool_picker > input[name='all_technos']")
 allTechnos=JSON.parse(allTechnos.value)
 usedTechnos=document.querySelector("div#tool_picker > input[name='used_technos']")
 usedTechnos=JSON.parse(usedTechnos.value)
+picturePaths=document.querySelector("div#tool_picker > input[name='picture_paths']")
+picturePaths=JSON.parse(picturePaths.value)
 
 const renderPicker = ()=>{
   pickerDiv.innerHTML=""
@@ -32,7 +34,7 @@ const renderPicker = ()=>{
 
     techEltImg=document.createElement("img")
     techEltImg.classList.add("sectionTools__img")
-    techEltImg.src="../assets/icons/"+tech.picture
+    techEltImg.src=picturePaths[tech.picture]
     techEltImg.height=40
     techEltImg.width=40
 
@@ -46,7 +48,7 @@ const renderPicker = ()=>{
 
     techEltImg=document.createElement("img")
     techEltImg.classList.add("sectionTools__img")
-    techEltImg.src="../assets/icons/"+tech.picture
+    techEltImg.src=picturePaths[tech.picture]
     techEltImg.height=40
     techEltImg.width=40
 
