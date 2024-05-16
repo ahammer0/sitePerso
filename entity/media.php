@@ -97,7 +97,6 @@ class Media
     require PROJROOT . "/dbConnect.php";
     $rmStatement = $db->prepare("DELETE FROM media WHERE id=:id");
     $rmStatement->execute(["id" => $this->id]);
-    $this->__destruct();
   }
   public static function getRndName(string $filename): string
   {
