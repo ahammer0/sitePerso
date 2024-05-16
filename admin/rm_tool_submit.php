@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . "/../dbConnect.php";
+require_once PROJROOT . "/entity/tool.php";
 
 if (!isset($_POST) || !isset($_POST["id"]) || !is_numeric($_POST["id"])) {
   echo "Les données transmises ne permettent pas de procéder";
@@ -15,10 +16,9 @@ if (
   return;
 }
 $id = $_POST["id"];
-$toolStatement = $db->prepare("DELETE FROM technos WHERE tech_id=:tech_id");
-$toolStatement->execute([
-  "tech_id" => $id,
-]);
+$tool = new Tool();
+$tool->setId($id);
+$tool->rm();
 header("Location:admin.php");
 exit();
 ?>

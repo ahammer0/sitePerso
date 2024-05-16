@@ -12,6 +12,10 @@ class Tool
   private string $url;
   private bool $is_enabled;
 
+  public function getId(): int
+  {
+    return $this->tech_id;
+  }
   public function getName(): string
   {
     return $this->name;
@@ -82,10 +86,9 @@ class Tool
   }
   public function rm(): void
   {
-    require PROJROOT . "dbConnect.php";
+    require PROJROOT . "/dbConnect.php";
     $rmStatement = $db->prepare("DELETE FROM technos WHERE tech_id=:tech_id");
     $rmStatement->execute(["tech_id" => $this->tech_id]);
-    $this->__destruct();
   }
   public static function getAllEnabled(): array
   {
