@@ -92,7 +92,7 @@ class Media
     }
     $this->updateAll();
   }
-  public function rm()
+  public function rm(): void
   {
     require PROJROOT . "/dbConnect.php";
     $rmStatement = $db->prepare("DELETE FROM media WHERE id=:id");

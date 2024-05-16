@@ -2,6 +2,7 @@
 require_once __DIR__ . "/../dbConnect.php";
 require_once __DIR__ . "/../env.php";
 require_once PROJROOT . "/entity/media.php";
+require_once PROJROOT . "/entity/tool.php";
 
 $pictureList = Media::getAllFromType("icon");
 
@@ -12,11 +13,8 @@ if (isset($_POST) && isset($_POST["id"])) {
   } else {
     $id = $_POST["id"];
   }
-  $toolStatement = $db->prepare("SELECT * FROM technos WHERE tech_id=:tech_id");
-  $toolStatement->execute([
-    "tech_id" => $id,
-  ]);
-  $tool = $toolStatement->fetchAll()[0];
+  $tool = new Tool();
+  $tool->setId($id);
   $isEdit = true;
 } else {
   $isEdit = false;
@@ -30,7 +28,7 @@ if (isset($_POST) && isset($_POST["id"])) {
   <meta http-equiv="X-UA-Compatible" content="IE-edge" />
   <title>
     <?php if ($isEdit) {
-      echo "Édition de la tool : " . $tool["name"];
+      echo "Édition de la tool : " . $tool->getName();
     } else {
       echo "Création d' une tool";
     } ?>
@@ -42,7 +40,7 @@ if (isset($_POST) && isset($_POST["id"])) {
     <div class="modalBox">
       <h1 class="modalBox__element">
         <?php if ($isEdit) {
-          echo "Édition de la tool : " . $tool["name"];
+          echo "Édition de la tool : " . $tool->getName();
         } else {
           echo "Création d' une tool";
         } ?>
@@ -56,7 +54,7 @@ if (isset($_POST) && isset($_POST["id"])) {
         <div class="form__item">
           <label for="name">Nom de la tool</label>
           <input class="input" type="text" name="name" value="<?php echo $isEdit
-            ? $tool["name"]
+            ? $tool->getName()
             : ""; ?>"/>
         </div>
         <div class="form__item">
@@ -74,25 +72,25 @@ if (isset($_POST) && isset($_POST["id"])) {
           <label for="picture">Nom du fichier icone</label>
           <input class="input" type="file" name="picture" />
           <input type="number" name="picture" value="<?php echo $isEdit
-            ? $tool["picture"]
+            ? $tool->getPictureId()
             : ""; ?>"/>
         </div>
         <div class="form__item">
           <label for="alt_seo">Description de l' icone</label>
           <input class="input" type="text" name="alt_seo" value="<?php echo $isEdit
-            ? $tool["alt_seo"]
+            ? $tool->getAltSeo()
             : ""; ?>"/>
         </div>
         <div class="form__item">
           <label for ="url">Url de la techno</label>
           <input class="input" type="text" name="url" value="<?php echo $isEdit
-            ? $tool["url"]
+            ? $tool->getUrl()
             : ""; ?>"/>
         </div>
         <div class="form__item">
           <label for="is_enabled">Est visible ?</label>
           <input type="checkbox" name="is_enabled" value="1" <?php echo $isEdit
-            ? ($tool["is_enabled"]
+            ? ($tool->getIsEnabled()
               ? "checked"
               : "")
             : ""; ?>/>

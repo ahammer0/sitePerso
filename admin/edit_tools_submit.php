@@ -3,6 +3,7 @@ session_start();
 require_once __DIR__ . "/../dbConnect.php";
 require_once __DIR__ . "/../env.php";
 require_once PROJROOT . "/entity/media.php";
+require_once PROJROOT . "/entity/tool.php";
 
 if (
   !isset($_POST) ||
@@ -51,7 +52,7 @@ if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0) {
     echo "le fichier envoyé ne comporte pas une extension conforme <br/> l' extension {$extension} n' est pas autorisée";
     return;
   }
-  $path = __DIR__ . "/../assets/icons/";
+  $path = __DIR__ . "/../media/icons/";
   if (!is_dir($path)) {
     echo "le dossier {$path} n' existe pas !";
     return;
@@ -71,28 +72,12 @@ if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0) {
 }
 
 if ($isEditing) {
-  $toolStatement = $db->prepare(
-    "UPDATE technos SET name=:name, picture=:picture, alt_seo=:alt_seo, url=:url, is_enabled=:is_enabled WHERE tech_id=:tech_id",
-  );
-  $toolStatement->execute([
-    "name" => $name,
-    "picture" => $picture,
-    "alt_seo" => $alt_seo,
-    "url" => $url,
-    "is_enabled" => $is_enabled ? 1 : 0,
-    "tech_id" => $id,
-  ]);
+  $tool = new Tool();
+  $tool->setId($id);
+  $tool->setAll($name, $picture, $alt_seo, $url, $is_enabled);
 } else {
-  $insertStatement = $db->prepare(
-    "INSERT INTO technos(name,picture,alt_seo,url,is_enabled) VALUES (:name, :picture, :alt_seo, :url, :is_enabled)",
-  );
-  $insertStatement->execute([
-    "name" => $name,
-    "picture" => $picture,
-    "alt_seo" => $alt_seo,
-    "url" => $url,
-    "is_enabled" => $is_enabled ? 1 : 0,
-  ]);
+  $tool = new Tool();
+  $tool->setAll($name, $picture, $alt_seo, $url, $is_enabled);
 }
 echo "la requete à bien étée prise en compte";
 header("Location:admin.php");

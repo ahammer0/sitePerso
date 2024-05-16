@@ -24,9 +24,68 @@ class Tool
   {
     return $this->picture->getAbsPath();
   }
+  public function getPictureId(): int
+  {
+    return $this->picture->getId();
+  }
   public function getUrl(): string
   {
     return $this->url;
+  }
+  public function getIsEnabled(): bool
+  {
+    return $this->is_enabled;
+  }
+  public function setAll(
+    string $name,
+    mixed $picture = 0,
+    string $alt_seo,
+    string $url,
+    bool $is_enabled,
+  ): void {
+    if (is_numeric($picture)) {
+      $picture = intval($picture);
+    } else {
+      throw new Exception(
+        "picture id provided is not numeric :" . var_export($picture, true),
+      );
+    }
+    require PROJROOT . "/dbConnect.php";
+    if (isset($this->tech_id)) {
+      $toolStatement = $db->prepare(
+        "UPDATE technos SET name=:name, picture=:picture, alt_seo=:alt_seo, url=:url, is_enabled=:is_enabled WHERE tech_id=:tech_id",
+      );
+      $toolStatement->execute([
+        "name" => $name,
+        "picture" => $picture,
+        "alt_seo" => $alt_seo,
+        "url" => $url,
+        "is_enabled" => $is_enabled ? 1 : 0,
+        "tech_id" => $this->tech_id,
+      ]);
+    } else {
+      $insertStatement = $db->prepare(
+        "INSERT INTO technos(name,picture,alt_seo,url,is_enabled) VALUES (:name, :picture, :alt_seo, :url, :is_enabled)",
+      );
+      $insertStatement->execute([
+        "name" => $name,
+        "picture" => $picture,
+        "alt_seo" => $alt_seo,
+        "url" => $url,
+        "is_enabled" => $is_enabled ? 1 : 0,
+      ]);
+      $idTool = $db->prepare("SELECT @@identity");
+      $idTool->execute();
+      $this->tech_id = $idTool->fetch()[0];
+    }
+    $this->updateAll();
+  }
+  public function rm(): void
+  {
+    require PROJROOT . "dbConnect.php";
+    $rmStatement = $db->prepare("DELETE FROM technos WHERE tech_id=:tech_id");
+    $rmStatement->execute(["tech_id" => $this->tech_id]);
+    $this->__destruct();
   }
   public static function getAllEnabled(): array
   {
