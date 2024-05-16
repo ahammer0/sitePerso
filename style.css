@@ -75,15 +75,17 @@ button:focus{
     width: 10rem;
     height: 10rem;
     margin: auto;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     object-fit: cover;
+    box-shadow:0 0 9px 0 #0002;
+    border-radius:0.25rem;
 }
 .sectionBio .sectionBio__profile {
     min-width: 30%;
     margin: 2rem;
 }
 .sectionBio .sectionBio__name {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 .sectionBio .sectionBio__description {
     margin: 2rem;
@@ -107,6 +109,8 @@ button:focus{
     width: 18rem;
     margin: 1rem;
     background-color: var(--light-gray);
+    box-shadow:0 0 9px 0 #0002;
+    border-radius:0.25rem;
 }
 @media screen and (max-width: 1000px) {
     .workElt {
@@ -153,7 +157,18 @@ button:focus{
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    box-shadow:0 0 9px 0 #0002;
+    border-radius:0.25rem;
+
 }
+.sectionTools article:hover{
+  transform:scale(1.05);
+  transition:200ms;
+}
+.sectionTools a:hover{
+  text-decoration:none;
+}
+
 .sectionTools .sectionTools__img {
     height: 5rem;
     width: 5rem;
@@ -194,6 +209,8 @@ button:focus{
     display: flex;
     justify-content: center;
     flex-direction: column;
+    box-shadow:0 0 9px 0 #0002;
+    border-radius:0.25rem;
 }
 
 .sectionContact .sectionContact__text--title {
