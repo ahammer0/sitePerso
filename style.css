@@ -164,6 +164,7 @@ button:focus{
 .sectionTools article:hover{
   transform:scale(1.05);
   transition:200ms;
+  box-shadow:0 0 12px 0 #0004;
 }
 .sectionTools a:hover{
   text-decoration:none;
