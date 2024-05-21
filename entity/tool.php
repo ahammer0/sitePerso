@@ -12,6 +12,14 @@ class Tool
   private string $url;
   private bool $is_enabled;
 
+  public function __sleep()
+  {
+    return ["tech_id"];
+  }
+  public function __wakeup()
+  {
+    $this->updateAll();
+  }
   public function getId(): int
   {
     return $this->tech_id;

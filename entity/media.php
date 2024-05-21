@@ -12,6 +12,14 @@ class Media
   private static $allowedTypes = ["icon", "projectPicture"];
   private static $defaultPicturePath = "/assets/icons/dev.png";
 
+  public function __sleep()
+  {
+    return ["id"];
+  }
+  public function __wakeup()
+  {
+    $this->updateAll();
+  }
   public function getId(): int
   {
     return $this->id;
