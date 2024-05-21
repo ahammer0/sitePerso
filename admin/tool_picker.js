@@ -5,29 +5,35 @@ usedTechnos=document.querySelector("div#tool_picker > input[name='used_technos']
 usedTechnos=JSON.parse(usedTechnos.value)
 picturePaths=document.querySelector("div#tool_picker > input[name='picture_paths']")
 picturePaths=JSON.parse(picturePaths.value)
+for (let tech of allTechnos){
+  if (usedTechnos.find((elt)=>elt.name===tech.name)!==undefined){
+    tech.isUsed=true
+  }
+  else{
+    tech.isUsed=false
+  }
+}
 
 const renderPicker = ()=>{
   pickerDiv.innerHTML=""
 
-  allTechList=document.createElement("div")
-  allTechList.classList.add("flex","flex-wrap","bg-light-gray","border")
+  availableTechList=document.createElement("div")
+  availableTechList.classList.add("flex","flex-wrap","bg-light-gray","border")
   
   usedTechList=document.createElement("div")
   usedTechList.classList.add("flex","flex-wrap","bg-light-gray","border")
 
   const addTechno = (tech)=>{
-    usedTechnos=[...usedTechnos,tech]
+    tech.isUsed=true
     renderPicker();
   }
   const rmTechno = (tech)=>{
-    let index=usedTechnos.findIndex((elt)=>elt.name==tech.name)
-    if(index>=0){
-      usedTechnos.splice(index,1)
-    }
+    tech.isUsed=false
     renderPicker()
   }
 
   for (let tech of allTechnos){
+    if(!tech.isUsed){
     techElt=document.createElement("div")
     
     techElt.addEventListener("click",()=>{addTechno(tech)})
@@ -39,9 +45,11 @@ const renderPicker = ()=>{
     techEltImg.width=40
 
     techElt.appendChild(techEltImg)
-    allTechList.appendChild(techElt)
+    availableTechList.appendChild(techElt)
+    }
   }
-  for (let tech of usedTechnos){
+  for (let tech of allTechnos){
+    if(tech.isUsed){
     techElt=document.createElement("div")
     techElt.addEventListener("click",(e)=>{rmTechno(tech)})
 
@@ -54,9 +62,10 @@ const renderPicker = ()=>{
 
     techElt.appendChild(techEltImg)
     usedTechList.appendChild(techElt)
+    }
   }
 
-  pickerDiv.appendChild(allTechList)
+  pickerDiv.appendChild(availableTechList)
   pickerDiv.appendChild(usedTechList)
   usedTechInput=document.createElement("input")
   usedTechInput.type="hidden"
