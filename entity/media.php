@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . "/../env.php";
 
-class Media
+class Media implements JsonSerializable
 {
   private int $id;
   private string $fileName;
@@ -11,6 +11,14 @@ class Media
   private string $absolutePath;
   private static $allowedTypes = ["icon", "projectPicture"];
   private static $defaultPicturePath = "/assets/icons/dev.png";
+
+  public function jsonSerialize(): mixed
+  {
+    return [
+      "id" => $this->id,
+      "absolutePath" => $this->absolutePath,
+    ];
+  }
 
   public function __sleep()
   {

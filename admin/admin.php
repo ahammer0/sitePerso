@@ -2,6 +2,8 @@
 require_once __DIR__ . "/../dbConnect.php";
 require_once __DIR__ . "/../env.php";
 require_once PROJROOT . "/entity/media.php";
+require_once PROJROOT . "/entity/project.php";
+require_once PROJROOT . "/entity/tool.php";
 
 session_start();
 if (!isset($_SESSION["LOGGED_USER"])) {
@@ -45,122 +47,84 @@ if (!isset($_SESSION["LOGGED_USER"])) {
                 </div>
             </nav>
         </header>
-  <?php
-  if ($_SESSION["LOGGED_USER"]["roles"] === "admin") {
-    $toolsStatement = $db->prepare("SELECT * FROM technos");
+  <?php if ($_SESSION["LOGGED_USER"]["roles"] === "admin") {
+    $tools = Tool::getAll();
   } else {
-    $toolsStatement = $db->prepare("SELECT * FROM technos WHERE is_enabled=1");
-  }
-  $toolsStatement->execute();
-  $tools = $toolsStatement->fetchAll();
-  ?>
+    $tools = Tool::getAllEnabled();
+  } ?>
   <section class="sectionTools">
     <h2>Section Tools</h2>
     <div class="sectionTools__container">
-    <?php foreach ($tools as $tool):
-      try {
-        $picture = new Media();
-        $picture->setId($tool["picture"]);
-        $picturePath = $picture->getAbsPath();
-      } catch (Exception $e) {
-        $picturePath = "/assets/icons/dev.png";
-      } ?>
+    <?php foreach ($tools as $tool): ?>
       <article>
         <img
             class="sectionTools__img"
-            src="<?php echo $picturePath; ?>"
-            alt="<?php echo $tool["alt_seo"]; ?>"
+            src="<?php echo $tool->getPicture()->getAbsPath(); ?>"
+            alt="<?php echo $tool->getAltSeo(); ?>"
             height="80"
             width="80"
         />
-        <h3 class="sectionTools__title"><?php echo $tool["name"]; ?></h3>
+        <h3 class="sectionTools__title"><?php echo $tool->getName(); ?></h3>
         <div class="sectionTools__buttons">
           <form action="edit_tools.php" method="post">
-            <input type="hidden" name="id" value="<?php echo $tool[
-              "tech_id"
-            ]; ?>">
+            <input type="hidden" name="id" value="<?php echo $tool->getId(); ?>">
             <button class="btn" type="submit">Éditer</button>
           </form>
           <form action="rm_tool.php" method="post">
-            <input type="hidden" name="id" value="<?php echo $tool[
-              "tech_id"
-            ]; ?>">
+            <input type="hidden" name="id" value="<?php echo $tool->getId(); ?>">
             <button class="btn" type="submit">Supprimer</button>
           </form>
-          <?php if ($tool["is_enabled"]): ?>
+          <?php if ($tool->getIsEnabled()): ?>
             <button class="btn btn--success" disabled>Activée</button>
         <?php endif; ?>
         </div>
       </article>
-    <?php
-    endforeach; ?>
+    <?php endforeach; ?>
     </div>
     <a href="edit_tools.php"><button class="btn">Créer une tool</button></a>
   </section>
   <section class="sectionWork" id="work">
-  <?php
-  if ($_SESSION["LOGGED_USER"]["roles"] === "admin") {
-    $projectStatement = $db->prepare("SELECT * FROM projects");
+  <?php if ($_SESSION["LOGGED_USER"]["roles"] === "admin") {
+    $projects = Project::getAll();
   } else {
-    $projectStatement = $db->prepare(
-      "SELECT * FROM projects WHERE is_enabled=1",
-    );
-  }
-  $projectStatement->execute();
-  $projects = $projectStatement->fetchAll();
-  ?>
+    $projects = Project::getAllEnabled();
+  } ?>
       <h1 class="sectionWork__title">Mon Travail</h1>
       <div class="sectionWork__eltContainer">
-      <?php foreach ($projects as $project):
-        try {
-          $picture = new Media();
-          $picture->setId($project["picture"]);
-          $picturePath = $picture->getAbsPath();
-        } catch (Exception $e) {
-          $picturePath = "/assets/icons/dev.png";
-        } ?>
+      <?php foreach ($projects as $project): ?>
           <article class="workElt">
               <img
                   class="workElt__img"
-                  src="<?php echo $picturePath; ?>"
-                  alt="<?php echo $project[
-                    "description_short"
-                  ]; ?> fait par Axel Schwindenhammer"
+                  src="<?php echo $project->getPicture()->getAbsPath(); ?>"
+                  alt="<?php echo $project->getDescriptionShort(); ?> fait par Axel Schwindenhammer"
               />
               <div class="workElt__content">
                   <h3 class="workElt__title">
-                    <?php echo $project["name"]; ?>
+                    <?php echo $project->getName(); ?>
                   </h3>
                   <p class="workElt__description">
-                      <?php echo $project["description_short"]; ?>
+                      <?php echo $project->getDescriptionShort(); ?>
                   </p>
-                  <a class="workElt__link" href="<?php echo $project[
-                    "url"
-                  ]; ?>">
-                  <?php echo $project["name"]; ?></a>
+                  <a class="workElt__link" href="<?php echo $project->getUrl(); ?>">
+                  <?php echo $project->getName(); ?></a>
               </div>
               <div class="workElt__content">
                 <form action="edit_project.php" method="post">
-                  <input type="hidden" name="id" value="<?php echo $project[
-                    "project_id"
-                  ]; ?>">
+                  <input type="hidden" name="id" value="<?php echo $project->getId(); ?>">
                   <button class="btn" type="submit">Éditer</button>
                 </form>
                 <form action="rm_project.php" method="post">
-                  <input type="hidden" name="id" value="<?php echo $project[
-                    "project_id"
-                  ]; ?>">
+                  <input type="hidden" name="id" value="<?php echo $project->getId(); ?>">
                   <button class="btn" type="submit">Supprimer</button>
                 </form>
                 <div>
-                  <?php if ($project["is_enabled"]): ?>
+                  <?php if ($project->getIsEnabled()): ?>
                     <button class="btn btn--success" disabled>Activée</button>
                   <?php endif; ?>
                 </div>
               </div>
           </article>
-          <?php
-      endforeach; ?>
+          <?php endforeach; ?>
       </div>
     <a href="edit_project.php"><button class="btn">Créer un projet</button></a>
   </section>

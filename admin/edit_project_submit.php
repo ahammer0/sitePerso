@@ -3,11 +3,13 @@ session_start();
 require_once __DIR__ . "/../dbConnect.php";
 require_once __DIR__ . "/../env.php";
 require_once PROJROOT . "/entity/media.php";
+require_once PROJROOT . "/entity/project.php";
+require_once PROJROOT . "/entity/tool.php";
 
 if (
   !isset($_POST) ||
   !isset($_POST["name"]) ||
-  !isset($_POST["picture"]) ||
+  !isset($_POST["pictureId"]) ||
   !isset($_POST["description"]) ||
   !isset($_POST["description_short"]) ||
   !isset($_POST["url"]) ||
@@ -27,16 +29,25 @@ if (
 }
 
 $name = htmlspecialchars($_POST["name"]);
-$picture = htmlspecialchars($_POST["picture"]);
+$pictureId = htmlspecialchars($_POST["pictureId"]);
+$picture = new Media();
+$picture->setId($pictureId);
+
 $description = htmlspecialchars($_POST["description"]);
 $description_short = htmlspecialchars($_POST["description_short"]);
 $url = htmlspecialchars($_POST["url"]);
 
-$usedTechnos = $_POST["used_technos"];
-if (json_decode($usedTechnos) === null) {
+$usedTechnosJson = $_POST["used_technos"];
+if (json_decode($usedTechnosJson) === null) {
   echo "le json des technos n' est pas valide";
   return;
 }
+$usedTechnos = array_map(function (mixed $elt) {
+  $tool = new Tool();
+  $tool->jsonLoad(json_encode($elt));
+  return $tool;
+}, json_decode($usedTechnosJson));
+
 if (isset($_POST["id"]) && is_numeric($_POST["id"])) {
   $id = $_POST["id"];
   $isEditing = true;
@@ -85,13 +96,13 @@ if ($isEditing) {
   );
   $toolStatement->execute([
     "name" => $name,
-    "picture" => $picture,
+    "picture" => serialize($picture),
     "description" => $description,
     "description_short" => $description_short,
     "url" => $url,
     "is_enabled" => $is_enabled ? 1 : 0,
     "project_id" => $id,
-    "techs" => $usedTechnos,
+    "techs" => serialize($usedTechnos),
   ]);
 } else {
   $insertStatement = $db->prepare(
@@ -99,15 +110,16 @@ if ($isEditing) {
   );
   $insertStatement->execute([
     "name" => $name,
-    "picture" => $picture,
+    "picture" => serialize($picture),
     "description" => $description,
     "description_short" => $description_short,
     "url" => $url,
     "is_enabled" => $is_enabled ? 1 : 0,
-    "techs" => $usedTechnos,
+    "techs" => serialize($usedTechnos),
   ]);
 }
 echo "la requete à bien étée prise en compte";
-header("Location:admin.php");
+// debug
+//header("Location:admin.php");
 exit();
 ?>

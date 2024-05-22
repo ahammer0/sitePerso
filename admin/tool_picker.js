@@ -3,8 +3,7 @@ allTechnos=document.querySelector("div#tool_picker > input[name='all_technos']")
 allTechnos=JSON.parse(allTechnos.value)
 usedTechnos=document.querySelector("div#tool_picker > input[name='used_technos']")
 usedTechnos=JSON.parse(usedTechnos.value)
-picturePaths=document.querySelector("div#tool_picker > input[name='picture_paths']")
-picturePaths=JSON.parse(picturePaths.value)
+console.log(allTechnos)
 for (let tech of allTechnos){
   if (usedTechnos.find((elt)=>elt.name===tech.name)!==undefined){
     tech.isUsed=true
@@ -40,7 +39,7 @@ const renderPicker = ()=>{
 
     techEltImg=document.createElement("img")
     techEltImg.classList.add("sectionTools__img")
-    techEltImg.src=picturePaths[tech.picture]
+    techEltImg.src=tech.picture.absolutePath
     techEltImg.height=40
     techEltImg.width=40
 
@@ -56,7 +55,7 @@ const renderPicker = ()=>{
 
     techEltImg=document.createElement("img")
     techEltImg.classList.add("sectionTools__img")
-    techEltImg.src=picturePaths[tech.picture]
+    techEltImg.src=tech.picture.absolutePath
     techEltImg.height=40
     techEltImg.width=40
 
@@ -70,7 +69,7 @@ const renderPicker = ()=>{
   usedTechInput=document.createElement("input")
   usedTechInput.type="hidden"
   usedTechInput.name="used_technos"
-  usedTechInput.value=JSON.stringify(usedTechnos)
+  usedTechInput.value=JSON.stringify(allTechnos.filter((e)=>e.isUsed===true))
 
   pickerDiv.appendChild(usedTechInput)
 }

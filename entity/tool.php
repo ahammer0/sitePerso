@@ -3,7 +3,7 @@ declare(strict_types=1);
 require_once __DIR__ . "/../env.php";
 require_once PROJROOT . "/entity/media.php";
 
-class Tool
+class Tool implements JsonSerializable
 {
   private int $tech_id;
   private string $name;
@@ -11,6 +11,20 @@ class Tool
   private string $alt_seo;
   private string $url;
   private bool $is_enabled;
+
+  public function jsonLoad(string $json): void
+  {
+    $decodedJson = json_decode($json);
+    $this->setId($decodedJson->id);
+  }
+  public function jsonSerialize(): mixed
+  {
+    return [
+      "id" => $this->tech_id,
+      "picture" => $this->picture,
+      "name" => $this->name,
+    ];
+  }
 
   public function __sleep()
   {
@@ -32,13 +46,9 @@ class Tool
   {
     return $this->alt_seo;
   }
-  public function getPicturePath(): string
+  public function getPicture(): Media
   {
-    return $this->picture->getAbsPath();
-  }
-  public function getPictureId(): int
-  {
-    return $this->picture->getId();
+    return $this->picture;
   }
   public function getUrl(): string
   {
@@ -98,6 +108,19 @@ class Tool
     $rmStatement = $db->prepare("DELETE FROM technos WHERE tech_id=:tech_id");
     $rmStatement->execute(["tech_id" => $this->tech_id]);
   }
+  public static function getAll(): array
+  {
+    require PROJROOT . "/dbConnect.php";
+    $toolsStatement = $db->prepare("SELECT tech_id FROM technos");
+    $toolsStatement->execute();
+    $toolsId = $toolsStatement->fetchAll(PDO::FETCH_COLUMN);
+    $toolsArray = array_map(function (int $index) {
+      $tool = new Tool();
+      $tool->setId($index);
+      return $tool;
+    }, $toolsId);
+    return $toolsArray;
+  }
   public static function getAllEnabled(): array
   {
     require PROJROOT . "/dbConnect.php";
@@ -136,8 +159,7 @@ class Tool
       throw new Exception("the tool requested doesn't exist in database");
     } else {
       $this->name = $tool["name"];
-      $this->picture = new Media();
-      $this->picture->setId($tool["picture"]);
+      $this->picture = unserialize($tool["picture"]);
       $this->alt_seo = $tool["alt_seo"];
       $this->url = $tool["url"];
       $this->is_enabled = boolval($tool["is_enabled"]);

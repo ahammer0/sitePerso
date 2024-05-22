@@ -2,10 +2,10 @@
 require_once __DIR__ . "/../dbConnect.php";
 require_once __DIR__ . "/../env.php";
 require_once PROJROOT . "/entity/media.php";
+require_once PROJROOT . "/entity/tool.php";
+require_once PROJROOT . "/entity/project.php";
 
-$toolStatement = $db->prepare("SELECT tech_id, name, picture FROM technos");
-$toolStatement->execute();
-$tools = $toolStatement->fetchAll();
+$tools = Tool::getAll();
 $pictureList = Media::getAllFromType("projectPicture");
 $iconPaths = Media::getAllPathsFromType("icon");
 
@@ -16,13 +16,8 @@ if (isset($_POST) && isset($_POST["id"])) {
   } else {
     $id = $_POST["id"];
   }
-  $projectStatement = $db->prepare(
-    "SELECT * FROM projects WHERE project_id=:project_id",
-  );
-  $projectStatement->execute([
-    "project_id" => $id,
-  ]);
-  $project = $projectStatement->fetchAll()[0];
+  $project = new Project();
+  $project->setId($id);
   $isEdit = true;
 } else {
   $isEdit = false;
@@ -36,7 +31,7 @@ if (isset($_POST) && isset($_POST["id"])) {
   <meta http-equiv="X-UA-Compatible" content="IE-edge" />
   <title>
     <?php if ($isEdit) {
-      echo "Édition du projet : " . $project["name"];
+      echo "Édition du projet : " . $project->getName();
     } else {
       echo "Création d'un projet";
     } ?>
@@ -56,7 +51,7 @@ if (isset($_POST) && isset($_POST["id"])) {
       <div class="form__item">
         <label for="name">Nom du projet</label>
         <input type="text" name="name" value="<?php echo $isEdit
-          ? $project["name"]
+          ? $project->getName()
           : ""; ?>"/>
       </div>
       <div class="form__item">
@@ -72,44 +67,42 @@ if (isset($_POST) && isset($_POST["id"])) {
           <?php endforeach; ?>
         </div>
         <label for="picture">Nom du fichier icone</label>
-        <input type="file" name="picture" />
-        <input type="number" name="picture" value="<?php echo $isEdit
-          ? $project["picture"]
+        <input type="file" name="pictureId" />
+        <input type="number" name="pictureId" value="<?php echo $isEdit
+          ? $project->getPicture()->getId()
           : ""; ?>"/>
       </div>
       <div class="form__item">
         <label for="description">Description longue du projet</label>
         <textarea name="description" cols="30" rows="10"><?php echo $isEdit
-          ? $project["description"]
+          ? $project->getDescription()
           : ""; ?></textarea>
       </div>
       <div class="form__item">
         <label for="description_short">Description courte du projet</label>
         <textarea name="description_short" cols="30" rows="10"><?php echo $isEdit
-          ? $project["description_short"]
+          ? $project->getDescriptionShort()
           : ""; ?></textarea>
       </div>
       <div class="form__item">
         <label for ="url">Url du projet en ligne</label>
         <input type="url" name="url" value="<?php echo $isEdit
-          ? $project["url"]
+          ? $project->getUrl()
           : ""; ?>"/>
       </div>
       <div id="tool_picker" class="form__item">
+      <?php vdump($project); ?>
         <input type="hidden" name="used_technos" value='<?php echo $isEdit
-          ? $project["techs"]
+          ? json_encode($project->getTechs())
           : "[]"; ?>'/>
         <input type="hidden" name="all_technos" value='<?php echo json_encode(
           $tools,
-        ); ?>'/>
-        <input type="hidden" name="picture_paths" value='<?php echo json_encode(
-          $iconPaths,
         ); ?>'/>
       </div>
       <div class="form__item">
         <label for="is_enabled">Est visible ?</label>
         <input type="checkbox" name="is_enabled" value="1" <?php echo $isEdit
-          ? ($project["is_enabled"]
+          ? ($project->getIsEnabled()
             ? "checked"
             : "")
           : ""; ?>/>
@@ -121,6 +114,3 @@ if (isset($_POST) && isset($_POST["id"])) {
 </div>
 </body>
 </html>
-
-
-?> ?> ?> ?> ?> ?> ?> ?> ?> ?> ?> ?> ?> ?> ?> ?> ?>

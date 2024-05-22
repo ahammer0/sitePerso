@@ -3,6 +3,7 @@ require_once __DIR__ . "/env.php";
 require_once PROJROOT . "/dbConnect.php";
 require_once PROJROOT . "/entity/media.php";
 require_once PROJROOT . "/entity/tool.php";
+require_once PROJROOT . "/entity/project.php";
 ?>
 <!doctype html>
 <html lang="fr">
@@ -54,46 +55,30 @@ require_once PROJROOT . "/entity/tool.php";
             </section>
             <!-- SECTION PROJECTS ------------------>
             <section class="sectionWork" id="work">
-            <?php
-            $projectStatement = $db->prepare(
-              "SELECT name, description_short, picture, url, project_id FROM projects WHERE is_enabled=TRUE ORDER BY project_id DESC LIMIT 3",
-            );
-            $projectStatement->execute();
-            $projects = $projectStatement->fetchAll();
-            ?>
+            <?php $projects = Project::get3Enabled(); ?>
                 <h1 class="sectionWork__title">Mon Travail</h1>
                 <div class="sectionWork__eltContainer">
-                <?php foreach ($projects as $project):
-                  try {
-                    $picture = new Media();
-                    $picture->setId($project["picture"]);
-                    $picturePath = $picture->getAbsPath();
-                  } catch (Exception $e) {
-                    $picturePath = "/assets/icons/dev.png";
-                  } ?>
+                <?php foreach ($projects as $project): ?>
                     <article class="workElt">
                         <img
                             class="workElt__img"
-                            src="<?php echo $picturePath; ?>"
-                            alt="<?php echo $project[
-                              "description_short"
-                            ]; ?> fait par Axel Schwindenhammer"
+                            src="<?php echo $project
+                              ->getPicture()
+                              ->getAbsPath(); ?>"
+                            alt="<?php echo $project->getDescriptionShort(); ?> fait par Axel Schwindenhammer"
                         />
                         <div class="workElt__content">
                             <h3 class="workElt__title">
-                              <?php echo $project["name"]; ?>
+                              <?php echo $project->getName(); ?>
                             </h3>
                             <p class="workElt__description">
-                                <?php echo $project["description_short"]; ?>
+                                <?php echo $project->getDescriptionShort(); ?>
                             </p>
-                            <a class="workElt__link" href="<?php echo $project[
-                              "url"
-                            ]; ?>">
-                            <?php echo $project["name"]; ?></a>
+                            <a class="workElt__link" href="<?php echo $project->getUrl(); ?>">
+                            <?php echo $project->getName(); ?></a>
                         </div>
                     </article>
-                    <?php
-                endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
             </section>
             <!--    SECTION TOOLS -------------------------->
