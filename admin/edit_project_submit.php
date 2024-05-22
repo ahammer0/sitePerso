@@ -119,7 +119,6 @@ if ($isEditing) {
   ]);
 }
 echo "la requete à bien étée prise en compte";
-// debug
-//header("Location:admin.php");
+header("Location:admin.php");
 exit();
 ?>
