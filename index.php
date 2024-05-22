@@ -90,7 +90,9 @@ require_once PROJROOT . "/entity/project.php";
                       <article>
                           <img
                               class="sectionTools__img"
-                              src="<?php echo $tool->getPicturePath(); ?>"
+                              src="<?php echo $tool
+                                ->getPicture()
+                                ->getAbsPath(); ?>"
                               alt="<?php echo $tool->getAltSeo(); ?>"
                               height="80"
                               width="80"
